@@ -1,0 +1,29 @@
+<html>
+<body>
+<div>
+
+    <form method="POST" enctype="multipart/form-data" action="/api/testimg">
+        <table>
+            <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+            <tr><td>Id:</td><td><input type="number" name="id" value="0" id="next-num"/></td></tr>
+
+            <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+        </table>
+    </form>
+</div>
+
+<div>
+    <ul>
+    </ul>
+</div>
+
+<script>
+    (async ()=>{
+        let resp = await fetch("api/testimg/next")
+        let json = await resp.json()
+        document.getElementById("next-num").value = json;
+    })();
+
+</script>
+</body>
+</html>
