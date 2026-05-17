@@ -1,4 +1,4 @@
-package com.dominik.backend.entità;
+package com.dominik.backend.entità.chiaveComplessa;
 
 import jakarta.persistence.Embeddable;
 import lombok.Data;
