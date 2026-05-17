@@ -1,6 +1,6 @@
-package com.dominik.backend.entità;
+package com.dominik.backend.Entità;
 
-import com.dominik.backend.entità.chiaveComplessa.ReportId;
+import com.dominik.backend.Entità.chiaveComplessa.ReportId;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -11,7 +11,7 @@ import lombok.Data;
 public class Report {
     @Id
     @ManyToOne
-    private Account user;
+    private Account account;
     @Id
     @ManyToOne
     private Comment comment;

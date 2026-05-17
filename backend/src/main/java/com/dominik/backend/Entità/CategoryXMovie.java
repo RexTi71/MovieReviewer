@@ -1,6 +1,6 @@
-package com.dominik.backend.entità;
+package com.dominik.backend.Entità;
 
-import com.dominik.backend.entità.chiaveComplessa.CategoryXMovieId;
+import com.dominik.backend.Entità.chiaveComplessa.CategoryXMovieId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;

@@ -1,7 +1,7 @@
-package com.dominik.backend.entità.chiaveComplessa;
+package com.dominik.backend.Entità.chiaveComplessa;
 
-import com.dominik.backend.entità.Comment;
-import com.dominik.backend.entità.Account;
+import com.dominik.backend.Entità.Comment;
+import com.dominik.backend.Entità.Account;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +12,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReportId implements Serializable {
-    private Account user;
+    private Account account;
     private Comment comment;
 }

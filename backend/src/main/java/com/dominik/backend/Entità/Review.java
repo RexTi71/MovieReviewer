@@ -1,6 +1,6 @@
-package com.dominik.backend.entità;
+package com.dominik.backend.Entità;
 
-import com.dominik.backend.entità.chiaveComplessa.ReviewId;
+import com.dominik.backend.Entità.chiaveComplessa.ReviewId;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -10,11 +10,14 @@ import lombok.Data;
 public class Review {
     @Id
     @ManyToOne
+    @JoinColumn(name = "movie_id")
     Movie movie;
     @Id
     @ManyToOne
-    Account user;
+    @JoinColumn(name = "account_id")
+    Account account;
 
+    @Column(nullable = false)
     private Integer rating;
     private String content;
 }

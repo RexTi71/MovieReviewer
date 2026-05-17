@@ -1,4 +1,4 @@
-package com.dominik.backend.entità;
+package com.dominik.backend.Entità;
 
 import jakarta.persistence.*;
 import lombok.Data;

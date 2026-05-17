@@ -1,7 +1,7 @@
-package com.dominik.backend.entità.chiaveComplessa;
+package com.dominik.backend.Entità.chiaveComplessa;
 
-import com.dominik.backend.entità.Movie;
-import com.dominik.backend.entità.Account;
+import com.dominik.backend.Entità.Movie;
+import com.dominik.backend.Entità.Account;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +13,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class ReviewId implements Serializable {
     private Movie movie;
-    private Account user;
+    private Account account;
 
 }
