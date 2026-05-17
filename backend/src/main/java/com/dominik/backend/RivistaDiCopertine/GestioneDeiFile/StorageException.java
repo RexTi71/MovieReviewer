@@ -1,4 +1,4 @@
-package com.dominik.backend.RivistaDiCopertine;
+package com.dominik.backend.RivistaDiCopertine.GestioneDeiFile;
 
 
 public class StorageException extends RuntimeException {

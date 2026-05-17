@@ -1,8 +1,9 @@
 package com.dominik.backend.Controllore;
 
-import com.dominik.backend.RivistaDiCopertine.FileStorage;
+import com.dominik.backend.RivistaDiCopertine.GestioneDeiFile.FileStorage;
+import com.dominik.backend.RivistaDiCopertine.JWT.HushHush;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/api/testimg")
 public class TestImageUploadController {
+    @Autowired
+    HushHush hushHush;
+
     FileStorage testowePliki = new FileStorage("imgtest/");
 
     @GetMapping("/{id}")
