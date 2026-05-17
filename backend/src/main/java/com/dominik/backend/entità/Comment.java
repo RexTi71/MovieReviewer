@@ -9,20 +9,16 @@ import java.util.Date;
 @Data
 @Table(name = "comment")
 public class Comment {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @Id
+    Long id;
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
-
     @ManyToOne
-    @JoinColumn(name = "review_review_id")
     private Review review;
 
     @ManyToOne
-    @JoinColumn(name = "comment_id", nullable = true)
-    private Comment comment;
+    @JoinColumn(nullable = true)
+    private Comment replyTo;
 
     private String content;
     private Date date;

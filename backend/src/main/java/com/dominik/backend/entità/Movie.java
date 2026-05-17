@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -13,20 +14,19 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "genre")
-public class Genre {
+@Table(name = "film")
+public class Movie {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String title;
     private String description;
+    private Date productionDate;
 
-    @ManyToMany(mappedBy = "genres")
-    @ToString.Exclude
-    Set<Film> films;
 
-    public Genre(String name, String description){
-        this.name = name;
+    public Movie(String title, String description, Date productionDate){
+        this.title = title;
         this.description = description;
+        this.productionDate = productionDate;
     }
 }
