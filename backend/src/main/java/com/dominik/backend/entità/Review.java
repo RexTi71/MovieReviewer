@@ -6,14 +6,14 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "review")
+@IdClass(ReviewId.class)
 public class Review {
     @Id
     @ManyToOne
     Movie movie;
     @Id
     @ManyToOne
-    User user;
+    Account user;
 
     private Integer rating;
     private String content;

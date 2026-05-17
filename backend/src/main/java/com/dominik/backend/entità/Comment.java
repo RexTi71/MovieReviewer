@@ -7,12 +7,11 @@ import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "comment")
 public class Comment {
     @Id
     Long id;
     @ManyToOne
-    private User user;
+    private Account user;
     @ManyToOne
     private Review review;
 

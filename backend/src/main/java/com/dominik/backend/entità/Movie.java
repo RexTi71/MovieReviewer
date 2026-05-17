@@ -14,7 +14,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "film")
 public class Movie {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

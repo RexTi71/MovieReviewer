@@ -1,19 +1,18 @@
 package com.dominik.backend.entità;
 
+import com.dominik.backend.entità.chiaveComplessa.ReportId;
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
 @Data
-//Защита от повторных жалоб на один и тот же комментарий
-@Table(name = "report", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "comment_id"}))
+@IdClass(ReportId.class)
+//no
 public class Report {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @Id
     @ManyToOne
-    private User user;
-
+    private Account user;
+    @Id
     @ManyToOne
     private Comment comment;
 
