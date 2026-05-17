@@ -1,4 +1,4 @@
-package com.dominik.backend.model;
+package com.dominik.backend.entità;
 
 public enum UserType {
     USER,
