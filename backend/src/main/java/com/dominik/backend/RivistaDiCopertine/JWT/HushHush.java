@@ -2,6 +2,8 @@ package com.dominik.backend.RivistaDiCopertine.JWT;
 
 import com.dominik.backend.RivistaDiCopertine.GestioneDeiFile.StorageException;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.Base64;
 @Service
 @Getter
 public class HushHush {//ten serwis dostarcza sekretny sekret dla jwt
+    Logger logger = LoggerFactory.getLogger(HushHush.class);
     String secretPath = "secret.key";
 
     byte[] sekret;
@@ -32,11 +35,11 @@ public class HushHush {//ten serwis dostarcza sekretny sekret dla jwt
         try {
             OutputStream Stream = new FileOutputStream(secretPath);
             Stream.write(dane);
-            System.out.println("Zapisano sekret: "+ Base64.getEncoder().encodeToString(dane));
+            logger.info("Zapisano sekret: "+ Base64.getEncoder().encodeToString(dane));
             Stream.close();
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Uwaga, nie udało się zapisać sekretu");
+            logger.error("Uwaga, nie udało się zapisać sekretu");
         }
     }
     public byte[] wczytajSekret(){
@@ -44,7 +47,7 @@ public class HushHush {//ten serwis dostarcza sekretny sekret dla jwt
             InputStream inputStream = new FileInputStream(secretPath);
 
             byte[] dane = inputStream.readAllBytes();
-            System.out.println("Wczytano sekret: "+ Base64.getEncoder().encodeToString(dane));
+            logger.info("Wczytano sekret: "+ Base64.getEncoder().encodeToString(dane));
 
             inputStream.close();
 
@@ -56,12 +59,12 @@ public class HushHush {//ten serwis dostarcza sekretny sekret dla jwt
 
     }
 
-    public static byte[] generujNowySekret() {
+    public byte[] generujNowySekret() {
         SecureRandom random = new SecureRandom();
         byte bytes[] = new byte[64];//512 bitowy sekret
         random.nextBytes(bytes);
 
-        System.out.println("Wygenerowano nowy sekret: "+ Base64.getEncoder().encodeToString(bytes));
+        logger.info("Wygenerowano nowy sekret: "+ Base64.getEncoder().encodeToString(bytes));
 
         return bytes;
     }
