@@ -17,8 +17,6 @@ public class Account {
 
     @Column(nullable = false)
     private String passwordHash;
-    @Column(nullable = false)
-    private String salt;
 
     @Column(nullable = false)
     private UserType userType;

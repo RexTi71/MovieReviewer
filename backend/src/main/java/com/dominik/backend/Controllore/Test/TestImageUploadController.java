@@ -1,4 +1,4 @@
-package com.dominik.backend.Controllore;
+package com.dominik.backend.Controllore.Test;
 
 import com.dominik.backend.RivistaDiCopertine.GestioneDeiFile.FileStorage;
 import com.dominik.backend.RivistaDiCopertine.JWT.HushHush;
@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 //koledzy w ten sposób używamy klasy do przechowywania zdjęć
 @Controller
-@RequestMapping("/api/testimg")
+@RequestMapping("/api/test/img")
 public class TestImageUploadController {
     @Autowired
     HushHush hushHush;

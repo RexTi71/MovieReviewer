@@ -1,14 +1,12 @@
-package com.dominik.backend.Controllore;
+package com.dominik.backend.Controllore.Test;
 
 import com.dominik.backend.RivistaDiCopertine.Mail.Emailer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/api/testemailer")
+@RequestMapping("/api/test/emailer")
 public class TestEmailer {
     @Autowired
     Emailer emailer;
