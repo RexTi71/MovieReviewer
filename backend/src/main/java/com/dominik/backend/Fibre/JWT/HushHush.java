@@ -1,16 +1,11 @@
-package com.dominik.backend.RivistaDiCopertine.JWT;
+package com.dominik.backend.Fibre.JWT;
 
-import com.dominik.backend.RivistaDiCopertine.GestioneDeiFile.StorageException;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.net.MalformedURLException;
-import java.nio.file.Path;
 import java.security.SecureRandom;
 import java.util.Base64;
 

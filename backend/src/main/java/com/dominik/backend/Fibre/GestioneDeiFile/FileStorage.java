@@ -1,4 +1,4 @@
-package com.dominik.backend.RivistaDiCopertine.GestioneDeiFile;
+package com.dominik.backend.Fibre.GestioneDeiFile;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;

@@ -1,6 +1,6 @@
 package com.dominik.backend.Controllore.Test;
 
-import com.dominik.backend.RivistaDiCopertine.Mail.Emailer;
+import com.dominik.backend.Fibre.Mail.Emailer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.dominik.backend.RivistaDiCopertine.Mail;
+package com.dominik.backend.Fibre.Mail;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;

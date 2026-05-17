@@ -1,7 +1,7 @@
 package com.dominik.backend.Controllore.Test;
 
-import com.dominik.backend.RivistaDiCopertine.GestioneDeiFile.FileStorage;
-import com.dominik.backend.RivistaDiCopertine.JWT.HushHush;
+import com.dominik.backend.Fibre.GestioneDeiFile.FileStorage;
+import com.dominik.backend.Fibre.JWT.HushHush;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
