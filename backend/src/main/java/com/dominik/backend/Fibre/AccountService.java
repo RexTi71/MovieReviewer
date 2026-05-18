@@ -3,6 +3,7 @@ package com.dominik.backend.Fibre;
 import com.dominik.backend.Archivio.ArchAccount;
 import com.dominik.backend.Entità.Account;
 import com.dominik.backend.Entità.UserType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +18,7 @@ public class AccountService {
         this.archAccount = archAccount;
         this.passwordEncoder = passwordEncoder;
     }
+
 
     public ResponseEntity<String> registerAccount(String username, String email, String password){
         if(archAccount.existsAccountByUsername(username))
@@ -43,10 +45,17 @@ public class AccountService {
 
     public ResponseEntity<String> login(String username, String rawPassword) {
         Account account = archAccount.findByUsername(username);
-        if (account == null) return false;//narazie nie działa ide spać
-        //nie dodtyjać bo zabiej
+        if(account == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).contentType(MediaType.APPLICATION_JSON).body("Błędny login lub hasło");
+        }
 
         //Сравнить введенный пароль с сохраненным хешем Bcrypt
-        return passwordEncoder.matches(rawPassword, account.getPasswordHash());
+        boolean isPasswordCorrect = passwordEncoder.matches(rawPassword, account.getPasswordHash());
+
+        if(isPasswordCorrect){
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Zalogowano");
+        }else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).contentType(MediaType.APPLICATION_JSON).body("Błędny login lub hasło");
+        }
     }
 }
