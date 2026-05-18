@@ -1,0 +1,12 @@
+<div class="w-full h-fit bg-ink-black hover:animate-border-fill cursor-pointer text-white mb-5 rounded-md relative">
+  <div class="flex">
+    <img class="rounded-2xl p-2.5" ngSrc="{{imageUrl()}}" width="200" height="100" alt="obrazek">
+    <div class="flex flex-col">
+      <div class="flex">
+        <h1>{{ title() }}</h1>
+      </div>
+      <p class="text-gray-400 italic">{{user()}}</p>
+      <p>{{description()}}</p>
+    </div>
+  </div>
+</div>

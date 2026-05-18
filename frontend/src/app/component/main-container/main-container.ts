@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
+import {MovieEntry} from '../movie-entry/movie-entry';
 
 @Component({
   selector: 'app-main-container',
-  imports: [],
+  imports: [
+    MovieEntry
+  ],
   templateUrl: './main-container.html',
   styleUrl: './main-container.css',
 })
