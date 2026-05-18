@@ -7,4 +7,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ArchAccount extends JpaRepository<Account,Long> {
     Account findByUsername(String username);
+
+    boolean findByEmail(String email);
+
+    boolean existsAccountByEmail(String email);
+
+    boolean existsAccountByUsername(String username);
 }
