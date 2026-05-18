@@ -3,6 +3,7 @@ package com.dominik.backend.Fibre;
 import com.dominik.backend.Archivio.ArchAccount;
 import com.dominik.backend.Entità.Account;
 import com.dominik.backend.Entità.UserType;
+import com.dominik.backend.Fibre.Mail.Emailer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +14,12 @@ import org.springframework.stereotype.Service;
 public class AccountService {
     private final ArchAccount archAccount;
     private final PasswordEncoder passwordEncoder;
+    private final Emailer emailer;
 
-    public AccountService(ArchAccount archAccount, PasswordEncoder passwordEncoder){
+    public AccountService(ArchAccount archAccount, PasswordEncoder passwordEncoder, Emailer emailer){
         this.archAccount = archAccount;
         this.passwordEncoder = passwordEncoder;
+        this.emailer = emailer;
     }
 
 
@@ -39,8 +42,18 @@ public class AccountService {
 
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("konto utworzone");
     }
-    public ResponseEntity<String> verifyEmail(){
-
+    public ResponseEntity<String> verifyEmail(String email){
+        Account account = archAccount.findByEmail(email);
+        if(account == null){
+            return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body("Nie znaleziono użyszkodnika");
+        }else{
+            emailer.wyslijEmail(
+                    account.getEmail(),
+                    "Weryfikacja email",
+                    "Tutaj weryfikacja email"
+            );
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Wysłano email z weryfikacją");
+        }
     }
 
     public ResponseEntity<String> login(String username, String rawPassword) {
