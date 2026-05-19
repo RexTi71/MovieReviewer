@@ -2,12 +2,16 @@ package com.dominik.backend.Controllore;
 
 import com.dominik.backend.Entità.Account;
 import com.dominik.backend.Fibre.AccountService;
+import com.dominik.backend.Fibre.GestioneDeiFile.FileStorage;
 import com.dominik.backend.Fibre.JWT.JWT;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -15,6 +19,8 @@ public class AccountController {
     @Autowired
     JWT jwt;
     private final AccountService accountService;
+
+    FileStorage avatarStorage;
 
     public AccountController(AccountService accountService){
         this.accountService = accountService;
@@ -42,6 +48,9 @@ public class AccountController {
     ResponseEntity<String> usunSesje(@RequestParam String token,@RequestParam Long id){
         return accountService.deleteSession(id,accountService.getAccountFromToken(token));
     }
+
+
+
 
     @GetMapping("/me")
     Account getSelf(@RequestParam String token){
