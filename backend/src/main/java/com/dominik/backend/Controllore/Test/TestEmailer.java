@@ -13,7 +13,7 @@ public class TestEmailer {
 
     @PostMapping()
     public String handleFileUpload(@RequestParam("email") String email) {
-        emailer.wyslijEmail(email,"test","test");
+        emailer.wyslijEmail(email,"test","test https://google.pl");
         return "redirect:/testemailer.html";
     }
 }

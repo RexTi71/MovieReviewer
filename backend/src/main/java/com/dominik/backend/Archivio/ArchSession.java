@@ -5,5 +5,8 @@ import com.dominik.backend.Entità.Session;
 import com.dominik.backend.Entità.chiaveComplessa.ReportId;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface ArchSession extends JpaRepository<Session, Long> {
+    List<Session> findFirstById(Long id);
 }

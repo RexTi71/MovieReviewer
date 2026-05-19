@@ -22,18 +22,18 @@ public class JWT {
         secret = Keys.hmacShaKeyFor(hushHush.sekret);
     }
 
-    private SecretKey getSignInKey() {
+    public SecretKey getSignInKey() {
         return secret;
     }
 
-    private String buildToken(
+    public String buildToken(
             Map<String, String> extraClaims,
             String subject
     ){
         return buildToken(extraClaims,subject,1000/*ms*/*60/*s*/*15/*m*/);//domyślny czas tokenu 15 minut
     }
 
-    private String buildToken(
+    public String buildToken(
             Map<String, String> extraClaims,
             String subject,
             long expiration
@@ -48,7 +48,7 @@ public class JWT {
                 .compact();
     }
 
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
@@ -57,19 +57,19 @@ public class JWT {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    private boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
-    private Claims extractAllClaims(String token) {
-        Claims claims = Jwts
+    public Claims extractAllClaims(String token) {
+        Object claims = Jwts
                 .parser()
                 .verifyWith(getSignInKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-//        if((claims instanceof Claims) && claims!=null)
-//            return (Claims) claims;
+        if((claims instanceof Claims))
+            return (Claims) claims;
 
 
         throw new RuntimeException("invalid token format");
