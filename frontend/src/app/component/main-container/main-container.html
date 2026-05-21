@@ -1,6 +1,13 @@
-<div class="bg-deep-space-blue w-1/4 h-screen"></div>
-<div class="bg-baltic-blue w-2/4 h-screen flex flex-col p-4.5">
-  <app-movie-entry />
-  <app-movie-entry/>
+<div class="hidden md:flex bg-ink-black w-1/5 min-h-screen flex flex-col pl-12 pt-12">
+  <h1 class="text-white">Tutaj beda filtry</h1>
 </div>
-<div class="bg-deep-space-blue w-1/4 h-screen"></div>
+<div class="bg-baltic-blue w-full md:w-3/5 min-h-screen flex justify-center gap-2 flex-wrap p-2.5 ">
+  <app-movie-entry (click)="onMovieEntryClick(1)" />
+  <app-movie-entry [imageUrl]="'michael.jpg'" />
+  <app-movie-entry/>
+  <app-movie-entry/>
+  <app-movie-entry/>
+
+
+</div>
+<div class="hidden md:block bg-ink-black w-1/5 min-h-screen"></div>

@@ -9,4 +9,8 @@ import {MovieEntry} from '../movie-entry/movie-entry';
   templateUrl: './main-container.html',
   styleUrl: './main-container.css',
 })
-export class MainContainer {}
+export class MainContainer {
+  onMovieEntryClick(movieId: number){
+      console.log('Kliknięto w id: ', movieId)
+  }
+}

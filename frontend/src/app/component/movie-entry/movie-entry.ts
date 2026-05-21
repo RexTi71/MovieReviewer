@@ -10,9 +10,9 @@ import {NgOptimizedImage} from '@angular/common';
   styleUrl: './movie-entry.css',
 })
 export class MovieEntry {
-  title = input<String>("tytuł")
-  user = input<String>("użytkownik")
-  description = input<String>("opis")
+  title = input<String>("Tytuł")
+  reviews = input<String>("3/5")
+  relaseDate = input<String>("2000r.")
   imageUrl = input<String>("rem.png")
 
 }
