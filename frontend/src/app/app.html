@@ -1,6 +1,6 @@
 <nav class=" flex z-10 bg-ink-black w-screen pb-2 pt-2 h-fit top-0 sticky  shadow-xl shadow-ink-black">
   <div class="w-5/6 h-full flex justify-center items-center gap-12">
-    <app-nav-item class="font-extrabold" [text]="'MovieReviewer'" (click)="onNavItemClick('Główną strone')"/>
+    <app-nav-item class="font-extrabold" [text]="'MovieReviewer'" routerLink="/"/>
     <app-nav-item [text]="'Filmy'" (click)="onNavItemClick('Filmy')" />
     <app-nav-item [text]="'Programy TV'" (click)="onNavItemClick('Programy TV')"/>
     <app-nav-item [text]="'Top 10 lista'" (click)="onNavItemClick('Top 10 lista')"/>
@@ -10,4 +10,13 @@
     <app-nav-item  [text]="'Zaloguj się'" (click)="onNavItemClick('Logowanie')"/>
   </div>
 </nav>
-<app-main-container class="flex h-full"/>
+<div class="flex h-full">
+  <div class="hidden md:flex bg-ink-black w-1/5 min-h-screen flex-col pl-12 pt-12">
+    <h1 class="text-white">Tutaj beda filtry</h1>
+  </div>
+  <div class="bg-baltic-blue w-full md:w-3/5 min-h-screen  p-2.5">
+    <router-outlet></router-outlet>
+
+  </div>
+<div class="hidden md:block bg-ink-black w-1/5 min-h-screen"></div>
+</div>
