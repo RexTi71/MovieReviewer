@@ -1,28 +1,19 @@
 <div class="pt-10 flex gap-5 items-start">
   <div class="flex flex-col w-full min-w-0">
     <img class="shrink-0  h-auto object-cover rounded-xl shadow-lg shadow-black/50" ngSrc="michael.jpg" priority width="500" height="300" alt="plakat filmu">
-    <h1 class="text-white text-3xl leading-16">Premiera: 2000 r.</h1>
+    <h1 class="text-white text-3xl leading-16">Premiera: {{releaseDate()}} r.</h1>
 
   </div>
   <div class="flex flex-col w-full min-w-0">
-    <h1 class="text-white text-4xl text-center leading-16">Tytuł</h1>
-    <p class="wrap-break-word text-gray-400">
-
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod a purus at auctor. Nunc at volutpat diam. Aliquam vehicula lobortis auctor. Vivamus augue turpis, euismod at convallis eget, consequat in diam. Donec ut pretium augue, et commodo neque. Vestibulum sem mauris, blandit a viverra vitae, venenatis id neque. Sed quis consectetur ex, id dignissim metus.
-
-      Quisque ultrices faucibus mauris, et fermentum leo ullamcorper vel. Sed dictum, magna vitae gravida vehicula, arcu sem ornare purus, sed tincidunt est purus facilisis purus. Vestibulum rutrum, dui eu dignissim viverra, quam tellus dapibus odio, et sollicitudin risus est et tellus. Aenean erat tellus, laoreet sed odio sed, convallis euismod justo. Maecenas a turpis pulvinar purus ultrices faucibus. Vivamus enim mauris, elementum id maximus viverra, fringilla ac justo. Sed molestie, tortor a pretium suscipit, nisl ipsum vestibulum odio, efficitur vulputate lectus est eu nisi. Integer congue porta ipsum. Praesent gravida iaculis purus sit amet cursus. In hac habitasse platea dictumst. Aliquam gravida nunc vitae pulvinar cursus. Vestibulum risus erat, placerat sed tincidunt ornare, rutrum eu nisi. In hac habitasse platea dictumst.
-
-      Cras tristique vel quam at rhoncus. Mauris fringilla vehicula nibh, lacinia euismod urna. Sed at sagittis ante. Vestibulum bibendum massa id velit pellentesque, nec bibendum velit laoreet. In ut lorem nec felis laoreet pretium sed quis enim. Mauris pretium, augue ac mattis blandit, orci turpis accumsan risus, eget volutpat dolor diam sed libero. Integer vulputate tempor libero, vel facilisis odio ultrices vitae. Quisque laoreet justo odio, id aliquam ligula rutrum quis. Curabitur mattis, dolor et accumsan lobortis, lectus augue mattis massa, nec ullamcorper nisl diam vitae ipsum.
-
-      Nulla maximus mi non elit semper, et sodales orci pharetra. In ante erat, consequat sit amet ultricies non, luctus et quam. Mauris ac eros eget odio lacinia accumsan sit amet in ligula. Quisque suscipit fermentum quam sit amet lobortis. Curabitur egestas nibh non est rhoncus vehicula. Quisque venenatis, quam id fermentum tempus, nibh felis posuere odio, a tempor dui libero ac lorem. Curabitur hendrerit mollis ipsum et suscipit. In non sem mollis, sollicitudin arcu non, euismod dui. Vestibulum quis arcu ut massa lobortis commodo.
-
-      Ut molestie lorem non vehicula pulvinar. Phasellus rutrum interdum nisl, vitae posuere lectus suscipit vel. Mauris eget tellus non arcu tempor dapibus in vehicula tellus. Donec non lorem eros. Curabitur eget urna lobortis, ultricies nibh eget, pulvinar quam. Vivamus nisl ex, dapibus ut sodales non, convallis vel tellus. Ut nibh nisl, maximus vitae diam vitae, scelerisque posuere urna. </p>
+    <h1 class="text-white text-4xl text-center leading-16">{{ title() }}</h1>
+    <p class="wrap-break-word text-gray-400"> {{description()}}</p>
   </div>
 </div>
 <div>
   <h1 class="text-white text-4xl leading-16 font-bold">Recenzje</h1>
   <div class="pt-5 flex flex-col gap-y-5 border-t-2 border-t-gray-400">
     <app-movie-review/>
+    <app-review-comment/>
     <app-movie-review/>
     <app-movie-review/>
     <app-movie-review/>

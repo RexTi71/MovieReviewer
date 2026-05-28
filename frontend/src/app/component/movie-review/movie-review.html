@@ -1,27 +1,19 @@
-<div class="p-2.5 flex gap-10 border-2 shadow-sm shadow-ink-black border-gray-400 rounded-3xl w-full">
+<div class="bg-deep-space-blue p-2.5 flex gap-10 border-2 shadow-sm shadow-ink-black border-gray-400 rounded-3xl w-full">
   <div class="flex flex-col">
     <img class="rounded-full" ngSrc="rem.png" width="125" height="125" alt="awatar użytkownika">
-    <h1 class="text-gray-400">Nazwa użytkownika</h1>
+    <h1 class="text-gray-400">{{username()}}</h1>
   </div>
   <div class="flex flex-col">
     <div class="flex items-center gap-3 w-full min-w-0 mb-10">
-      <h1 class="text-white text-3xl pr-10 wrap-break-word w-150 leading-10">Tytuł ggagaga asg ag a gag gag ag  recenzjirecenzjirecenzji</h1>
+      <h1 class="text-white text-3xl pr-10 wrap-break-word w-150 leading-10">{{title()}}</h1>
       <svg class="h-8 w-8 shrink-0" fill="#ffffff" viewBox="0 0 36 36"  preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <title>recenzja</title>
         <path class="clr-i-solid clr-i-solid-path-1" d="M34,16.78a2.22,2.22,0,0,0-1.29-4l-9-.34a.23.23,0,0,1-.2-.15L20.4,3.89a2.22,2.22,0,0,0-4.17,0l-3.1,8.43a.23.23,0,0,1-.2.15l-9,.34a2.22,2.22,0,0,0-1.29,4l7.06,5.55a.23.23,0,0,1,.08.24L7.35,31.21a2.22,2.22,0,0,0,3.38,2.45l7.46-5a.22.22,0,0,1,.25,0l7.46,5a2.2,2.2,0,0,0,2.55,0,2.2,2.2,0,0,0,.83-2.4l-2.45-8.64a.22.22,0,0,1,.08-.24Z"></path>
       </svg>
-      <p class="text-gray-300 text-3xl leading-0">3/5</p>
+      <p class="text-gray-300 text-3xl leading-0">{{rating()}}</p>
     </div>
     <p class="text-gray-300">
-
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod a purus at auctor. Nunc at volutpat diam. Aliquam vehicula lobortis auctor. Vivamus augue turpis, euismod at convallis eget, consequat in diam. Donec ut pretium augue, et commodo neque. Vestibulum sem mauris, blandit a viverra vitae, venenatis id neque. Sed quis consectetur ex, id dignissim metus.
-
-      Quisque ultrices faucibus mauris, et fermentum leo ullamcorper vel. Sed dictum, magna vitae gravida vehicula, arcu sem ornare purus, sed tincidunt est purus facilisis purus. Vestibulum rutrum, dui eu dignissim viverra, quam tellus dapibus odio, et sollicitudin risus est et tellus. Aenean erat tellus, laoreet sed odio sed, convallis euismod justo. Maecenas a turpis pulvinar purus ultrices faucibus. Vivamus enim mauris, elementum id maximus viverra, fringilla ac justo. Sed molestie, tortor a pretium suscipit, nisl ipsum vestibulum odio, efficitur vulputate lectus est eu nisi. Integer congue porta ipsum. Praesent gravida iaculis purus sit amet cursus. In hac habitasse platea dictumst. Aliquam gravida nunc vitae pulvinar cursus. Vestibulum risus erat, placerat sed tincidunt ornare, rutrum eu nisi. In hac habitasse platea dictumst.
-
-      Cras tristique vel quam at rhoncus. Mauris fringilla vehicula nibh, lacinia euismod urna. Sed at sagittis ante. Vestibulum bibendum massa id velit pellentesque, nec bibendum velit laoreet. In ut lorem nec felis laoreet pretium sed quis enim. Mauris pretium, augue ac mattis blandit, orci turpis accumsan risus, eget volutpat dolor diam sed libero. Integer vulputate tempor libero, vel facilisis odio ultrices vitae. Quisque laoreet justo odio, id aliquam ligula rutrum quis. Curabitur mattis, dolor et accumsan lobortis, lectus augue mattis massa, nec ullamcorper nisl diam vitae ipsum.
-
-      Nulla maximus mi non elit semper, et sodales orci pharetra. In ante erat, consequat sit amet ultricies non, luctus et quam. Mauris ac eros eget odio lacinia accumsan sit amet in ligula. Quisque suscipit fermentum quam sit amet lobortis. Curabitur egestas nibh non est rhoncus vehicula. Quisque venenatis, quam id fermentum tempus, nibh felis posuere odio, a tempor dui libero ac lorem. Curabitur hendrerit mollis ipsum et suscipit. In non sem mollis, sollicitudin arcu non, euismod dui. Vestibulum quis arcu ut massa lobortis commodo.
-
-      Ut molestie lorem non vehicula pulvinar. Phasellus rutrum interdum nisl, vitae posuere lectus suscipit vel. Mauris eget tellus non arcu tempor dapibus in vehicula tellus. Donec non lorem eros. Curabitur eget urna lobortis, ultricies nibh eget, pulvinar quam. Vivamus nisl ex, dapibus ut sodales non, convallis vel tellus. Ut nibh nisl, maximus vitae diam vitae, scelerisque posuere urna. </p>
+      {{content()}}
+    </p>
   </div>
 </div>
