@@ -1,1 +1,34 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
+@font-face {
+  font-family: 'Work_Sans';
+  src: url("assets/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf") format(truetype);
+  font-weight: normal;
+  font-style: normal;
+}
+@theme{
+  --color-fresh-sky: #00a6fb;
+  --color-steel-blue: #0582ca;
+  --color-baltic-blue: #006494;
+  --color-deep-space-blue: #003554;
+  --color-ink-black: #051923;
+  --animate-border-fill: border-fill 1s ease-in-out infinite;
+  @keyframes border-fill {
+    /*TODO:hoạt hình*/
+  }
+}
+*{
+  font-family: 'Work_Sans';
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+app-root {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+}
