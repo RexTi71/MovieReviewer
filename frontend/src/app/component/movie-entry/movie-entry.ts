@@ -10,9 +10,9 @@ import {RouterLink} from '@angular/router';
 })
 export class MovieEntry {
   id = input<number>(1);
-  title = input<String>('Tytuł');
-  reviews = input<String>('3/5');
-  relaseDate = input<String>('2000r.');
-  imageUrl = input<String>('rem.png');
+  title = input<string>('Tytuł');
+  reviews = input<string>('3/5');
+  productionDate = input<string>('2000r.');
+  imageUrl = input<string>('rem.png');
 
 }

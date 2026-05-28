@@ -17,6 +17,7 @@ public class HomeService {
     public Page<Movie> getAllMovies(Pageable pageable){
         return repository.findAll(pageable);
     }
+    public Movie getMovie(Long id){return repository.findById(id).orElse(null);}
     public List<Movie> searchMovie(String title){
         return repository.findByTitleContaining(title);
     }

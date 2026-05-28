@@ -24,6 +24,10 @@ public class HomeController {
         Pageable pageable = PageRequest.of(0,15);
         return service.getAllMovies(pageable).getContent();
     }
+    @GetMapping("/movie/{id}")
+    public Movie getMovie(@PathVariable Long id){
+        return service.getMovie(id);
+    }
     @GetMapping("/search/{query}")
     public List<Movie> searchMovie(@PathVariable String query){
         return service.searchMovie(query);

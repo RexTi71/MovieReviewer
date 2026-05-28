@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -19,11 +20,12 @@ public class Movie {
 
     @Column(nullable = false)
     private String title;
+    @Column(length = 1000)
     private String description;
-    private Date productionDate;
+    private LocalDate productionDate;
 
 
-    public Movie(String title, String description, Date productionDate){
+    public Movie(String title, String description, LocalDate productionDate){
         this.title = title;
         this.description = description;
         this.productionDate = productionDate;
