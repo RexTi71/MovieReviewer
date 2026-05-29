@@ -11,6 +11,11 @@ export const routes: Routes = [
     title: 'Strona główna',
   },
   {
+    path: 'szukaj/:query',
+    component: HomePage,
+    title: 'Strona główna',
+  },
+  {
     path: 'login',
     component: LoginPage,
     title: 'Zaloguj się',

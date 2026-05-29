@@ -12,7 +12,7 @@ export class MovieEntry {
   id = input<number>(1);
   title = input<string>('Tytuł');
   reviews = input<string>('3/5');
-  productionDate = input<string>('2000r.');
+  productionDate = input<string | null>('2000r.');
   imageUrl = input<string>('rem.png');
 
 }

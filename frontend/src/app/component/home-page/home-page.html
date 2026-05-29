@@ -1,6 +1,6 @@
 <div class="flex justify-center gap-2 flex-wrap w-full h-full">
   @for (movie of movies(); track movie.id){
-    <app-movie-entry [id]="movie.id" [title]="movie.title" [productionDate]="movie.productionDate" [imageUrl]="'michael.jpg'" />
+    <app-movie-entry [id]="movie.id" [title]="movie.title" [productionDate]="movie.productionDate | date:'dd.MM.yyyy' +'r.'"  [imageUrl]="'michael.jpg'" />
   }@empty {
     <div class="text-white text-2xl mt-10">
       Trwa ładowanie filmów z serwera...
