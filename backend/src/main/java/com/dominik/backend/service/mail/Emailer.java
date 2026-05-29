@@ -14,6 +14,7 @@ public class Emailer {
     //to nie jest wygenerowane przez AI, poprostu nie chciało mi się robić proper way sekret handling
     //proszę nie dotykać
     //please don't touch
+    //dotyklem
     JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 
     Emailer(){

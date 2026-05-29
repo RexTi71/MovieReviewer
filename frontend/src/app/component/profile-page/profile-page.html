@@ -1,0 +1,29 @@
+<div class="w-full h-full flex items-center justify-center box-border text-white">
+  <div class="flex w-full max-w-6xl">
+    <div class="w-1/2 flex flex-col items-center justify-center">
+      <div class="h-160 w-120 border rounded-sm border-gray-400 shadow shadow-ink-black flex items-center justify-center text-center mb-4">
+        Brak zdjęcia do podglądu
+      </div>
+      <input type="file" class="w-80">
+    </div>
+
+    <div class="w-1/2 flex flex-col justify-center">
+      <table class="w-full max-w-md">
+        <tr class="border-t border-gray-400">
+          <th class="text-left py-2 px-4 text-gray-400">Nazwa użytkownika</th>
+          <td class="py-2 px-4 ">{{accountInfo()?.username}}</td>
+        </tr>
+        <tr class="border-t border-gray-400">
+          <th class="text-left py-2 px-4 text-gray-400">Email</th>
+          <td class="py-2 px-4">{{accountInfo()?.email}}</td>
+        </tr>
+        <tr >
+          <td colspan="2" class="text-center">
+            <button class="w-fit p-2.5 shadow-md shadow-black rounded-3xl bg-ink-black" (click)="onLoggingOut()">Wyloguj się</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+</div>

@@ -1,5 +1,6 @@
 package com.dominik.backend.controllers;
 
+import com.dominik.backend.dto.AccountDto;
 import com.dominik.backend.model.Account;
 import com.dominik.backend.service.AccountService;
 import com.dominik.backend.service.filemanager.FileStorage;
@@ -22,13 +23,13 @@ public class AccountController {
     }
 
     @PostMapping("/register") //пока без верификации email
-    public ResponseEntity<String> register(@RequestParam String username, @RequestParam String email, @RequestParam String password){
-        return accountService.registerAccount(username,email,password);
+    public ResponseEntity<String> register(@RequestBody AccountDto accountDto){
+        return accountService.registerAccount(accountDto.getUsername(), accountDto.getEmail(), accountDto.getPassword());
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password){
-        return accountService.login(username,password);
+    public ResponseEntity<String> login(@RequestBody AccountDto accountDto){
+        return accountService.login(accountDto.getUsername(), accountDto.getPassword());
     }
     @GetMapping("/verify")
     public ResponseEntity<String> verifyEmail(@RequestParam String token) {
