@@ -32,4 +32,7 @@ public class HomeController {
     public List<Movie> searchMovie(@PathVariable String query){
         return service.searchMovie(query);
     }
+
+    //@GetMapping("/top10")
+    //Доделать получение топ-10 фильмов по рейтингу
 }
