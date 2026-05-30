@@ -7,7 +7,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Getter
@@ -22,6 +21,7 @@ public class Movie {
     private String title;
     @Column(length = 1000)
     private String description;
+    private Float rating;
     private LocalDate productionDate;
 
 

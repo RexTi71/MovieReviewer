@@ -17,4 +17,6 @@ export class App {
   onNavItemClick(tabName : string){
     console.log('Kliknięto w ', tabName);
   }
+
+  protected readonly sessionStorage = sessionStorage;
 }

@@ -4,6 +4,7 @@ import {MovieReviewPage} from './component/movie-review-page/movie-review-page';
 import {LoginPage} from './component/login-page/login-page';
 import {RegistrationPage} from './component/registration-page/registration-page';
 import { Top10Page } from './component/top-10-page/top-10-page';
+import { ProfilePage } from './component/profile-page/profile-page';
 
 export const routes: Routes = [
   {
@@ -20,6 +21,11 @@ export const routes: Routes = [
     path: 'login',
     component: LoginPage,
     title: 'Zaloguj się',
+  },
+  {
+    path: 'profil',
+    component: ProfilePage,
+    title: 'Profil',
   },
   {
     path: 'rejestracja',

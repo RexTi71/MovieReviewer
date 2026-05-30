@@ -7,7 +7,11 @@
     <app-searchbar/>
   </div>
   <div class="w-1/6 h-full flex justify-center">
-    <app-nav-item  [text]="'Zaloguj się'" routerLink="login"/>
+    @if(sessionStorage.getItem('token')){
+      <app-nav-item [text]="'Mój profil'" routerLink="profil"/>
+    } @else {
+      <app-nav-item  [text]="'Zaloguj się'" routerLink="login"/>
+    }
   </div>
 </nav>
 <div class="flex h-full">
