@@ -6,6 +6,7 @@ import com.dominik.backend.service.AccountService;
 import com.dominik.backend.service.filemanager.FileStorage;
 import com.dominik.backend.service.jwt.JWT;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,11 +46,12 @@ public class AccountController {
         return accountService.deleteSession(id,accountService.getAccountFromToken(token));
     }
 
-
-
-
     @GetMapping("/me")
-    Account getSelf(@RequestParam String token){
-        return accountService.getAccountFromToken(token);
+    ResponseEntity<?> getSelf(@RequestParam String token){
+        try{
+           return ResponseEntity.ok(accountService.getAccountFromToken(token));
+        }catch (RuntimeException ex){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"response\": \"Token wygasł\"}");
+        }
     }
 }

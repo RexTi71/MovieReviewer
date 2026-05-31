@@ -17,14 +17,21 @@
   }
 </div>
 <div>
-  <h1 class="text-white text-4xl leading-16 font-bold">Recenzje</h1>
+  <div class="flex p-2.5">
+    <h1 class="text-white text-4xl leading-16 font-bold w-3/4">Recenzje</h1>
+    @if(token){
+      <button class="w-1/4 bg-ink-black text-white rounded-3xl cursor-pointer" (click)="onClickScrollTo(target)">Dodaj recenzje</button>
+    }
+  </div>
   <div class="pt-5 flex flex-col gap-y-5 border-t-2 border-t-gray-400">
-    <app-movie-review/>
+    @for (review of reviews(); track review.title) {
+      <app-movie-review [title]="review.title" [rating]="review.rating"  [content]="review.content" [username]="review.username"/>
+    }
     <app-review-comment/>
-    <app-movie-review/>
-    <app-movie-review/>
-    <app-movie-review/>
-    <app-movie-review/>
-
+      <div class="transition-all" #target>
+    @if(token){
+        <app-review-add />
+    }
+      </div>
   </div>
 </div>

@@ -17,6 +17,7 @@ export class ProfilePage {
   private http = inject(HttpClient);
   private token = sessionStorage.getItem('token');
   private route = inject(Router);
+  //TODO: Upload avatarow
   accountInfo = toSignal(
     this.http.get<AccountInfo>(`http://localhost:8080/api/auth/me?token=${this.token}`)
   );

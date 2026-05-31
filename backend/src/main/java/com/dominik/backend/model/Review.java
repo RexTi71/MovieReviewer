@@ -19,5 +19,7 @@ public class Review {
 
     @Column(nullable = false)
     private Integer rating;
+    private String title;
+    @Column(length = 2000)
     private String content;
 }

@@ -1,7 +1,7 @@
 <div class="bg-deep-space-blue p-2.5 flex gap-10 border-2 shadow-sm shadow-ink-black border-gray-400 rounded-3xl w-full">
   <div class="flex flex-col">
     <img class="rounded-full" ngSrc="rem.png" width="125" height="125" alt="awatar użytkownika">
-    <h1 class="text-gray-400">{{username()}}</h1>
+    <h1 class="text-gray-400 text-center">{{username()}}</h1>
   </div>
   <div class="flex flex-col">
     <div class="flex items-center gap-3 w-full min-w-0 mb-10">
@@ -10,7 +10,7 @@
         <title>recenzja</title>
         <path class="clr-i-solid clr-i-solid-path-1" d="M34,16.78a2.22,2.22,0,0,0-1.29-4l-9-.34a.23.23,0,0,1-.2-.15L20.4,3.89a2.22,2.22,0,0,0-4.17,0l-3.1,8.43a.23.23,0,0,1-.2.15l-9,.34a2.22,2.22,0,0,0-1.29,4l7.06,5.55a.23.23,0,0,1,.08.24L7.35,31.21a2.22,2.22,0,0,0,3.38,2.45l7.46-5a.22.22,0,0,1,.25,0l7.46,5a2.2,2.2,0,0,0,2.55,0,2.2,2.2,0,0,0,.83-2.4l-2.45-8.64a.22.22,0,0,1,.08-.24Z"></path>
       </svg>
-      <p class="text-gray-300 text-3xl leading-0">{{rating()}}</p>
+      <p class="text-gray-300 text-3xl leading-0">{{rating()}}/5</p>
     </div>
     <p class="text-gray-300">
       {{content()}}

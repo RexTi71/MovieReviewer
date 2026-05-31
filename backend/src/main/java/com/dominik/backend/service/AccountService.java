@@ -60,7 +60,7 @@ public class AccountService {
         accountRepository.save(account);
 
         sendVerificationEmail(email);
-        return sukces("Konto utworzone, sprawdzi poczte i zweryfikuj adress email przed zalogowaniem.");
+        return sukces("Konto utworzone, sprawdź poczte i zweryfikuj adress email przed zalogowaniem.");
     }
 
     public void sendVerificationEmail(String email){
