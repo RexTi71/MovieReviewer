@@ -1,7 +1,7 @@
 <form [formGroup]="addReviewForm" (ngSubmit)="onReviewSubmit()">
   <div class="bg-steel-blue p-2.5 flex gap-10 border-2 shadow-sm shadow-ink-black border-gray-400 rounded-3xl w-full">
     <div class="flex flex-col">
-      <img class="rounded-full" ngSrc="{{avatar()}}" width="125" height="125" alt="awatar użytkownika">
+      <img src="{{avatarUrl()}}" width="125" height="125" alt="awatar użytkownika">
       <h1 class="text-gray-400 text-center">{{account()?.username}}</h1>
     </div>
     <div class="flex flex-col">
@@ -32,7 +32,7 @@
           placeholder="Napisz recenzję...">
       </textarea>
       </div>
-    <input class="bg-ink-black text-white ml-150 rounded-2xl p-2.5 m-2.5 shadow-md shadow-black cursor-pointer" type="submit" value="Opublikuj recenzje">
+    <input class="bg-ink-black text-white ml-150 rounded-2xl p-2.5 m-2.5 shadow-md shadow-black hover:bg-fresh-sky active:scale-95 transition-all cursor-pointer" type="submit" value="Opublikuj recenzje">
     </div>
   </div>
 </form>

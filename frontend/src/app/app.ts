@@ -3,11 +3,10 @@ import {RouterModule} from '@angular/router';
 import {NavItem} from './component/nav-item/nav-item';
 
 import {Searchbar} from './component/searchbar/searchbar';
-import {HomePage} from './component/home-page/home-page';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterModule, NavItem, Searchbar, HomePage],
+  imports: [RouterModule, NavItem, Searchbar],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

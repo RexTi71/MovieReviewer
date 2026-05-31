@@ -1,6 +1,6 @@
 <div class="bg-deep-space-blue p-2.5 flex gap-10 border-2 shadow-sm shadow-ink-black border-gray-400 rounded-3xl w-full">
   <div class="flex flex-col">
-    <img class="rounded-full" ngSrc="rem.png" width="125" height="125" alt="awatar użytkownika">
+    <img [src]="imageUrl()"  width="125" height="125" alt="awatar użytkownika">
     <h1 class="text-gray-400 text-center">{{username()}}</h1>
   </div>
   <div class="flex flex-col">

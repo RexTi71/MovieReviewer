@@ -9,6 +9,7 @@ public class ReviewResponseDto {
     private Long movieId;
     private String title;
     private Integer rating;
+    private Long userId;
     private String username;
     private String content;
 }

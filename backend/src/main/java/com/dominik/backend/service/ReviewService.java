@@ -3,6 +3,7 @@ package com.dominik.backend.service;
 import com.dominik.backend.dto.ReviewDto;
 import com.dominik.backend.dto.ReviewResponseDto;
 import com.dominik.backend.model.Review;
+import com.dominik.backend.repository.MovieRepository;
 import com.dominik.backend.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,11 +13,14 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+
 public class ReviewService
 {
     private final ReviewRepository reviewRepository;
+    private final MovieRepository movieRepository;
     private final HomeService homeService;
     private final AccountService accountService;
+
     public List<ReviewResponseDto> getReviewsForMovie(Long id){
         List<ReviewResponseDto> mappedReviews = new ArrayList<>();
         List<Review> reviews = reviewRepository.findAllByMovieId(id);
@@ -27,6 +31,7 @@ public class ReviewService
             newReview.setTitle(review.getTitle());
             newReview.setRating(review.getRating());
             newReview.setContent(review.getContent());
+            newReview.setUserId(review.getAccount().getId());
             newReview.setUsername(review.getAccount().getUsername());
 
             mappedReviews.add(newReview);
@@ -45,5 +50,10 @@ public class ReviewService
         newReview.setMovie(homeService.getMovie(reviewDto.getMovieId()));
 
         reviewRepository.save(newReview);
+        updateRating(newReview.getMovie().getId());
+    }
+    private void updateRating(Long movieId){
+        Float averageRating = reviewRepository.avgRating(movieId);
+        movieRepository.updateMovieRating(averageRating, movieId);
     }
 }

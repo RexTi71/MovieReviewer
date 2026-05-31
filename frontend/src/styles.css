@@ -11,10 +11,7 @@
   --color-baltic-blue: #006494;
   --color-deep-space-blue: #003554;
   --color-ink-black: #051923;
-  --animate-border-fill: border-fill 1s ease-in-out infinite;
-  @keyframes border-fill {
-    /*TODO:hoạt hình*/
-  }
+
 }
 *{
   font-family: 'Work_Sans';

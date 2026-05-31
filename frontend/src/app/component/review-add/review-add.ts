@@ -1,5 +1,4 @@
 import { Component, inject, signal } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { HttpClient } from '@angular/common/http';
@@ -16,7 +15,7 @@ type Review = {
 };
 @Component({
   selector: 'app-review-add',
-  imports: [NgOptimizedImage, FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './review-add.html',
   styleUrl: './review-add.css',
 })
@@ -33,12 +32,11 @@ export class ReviewAdd {
     content: new FormControl(''),
   });
   account = toSignal(
-    this.http.get<Account>(`http://localhost:8080/api/auth/me?token=${this.token}`)
+    this.http.get<Account>(`http://localhost:8080/api/auth/me?token=${this.token}`),
   );
-  avatar = signal('rem.png');
+  avatarUrl = signal(`http://localhost:8080/api/avatar?token=${this.token}`);
   trescRecenzji: string = '';
-  onReviewSubmit(){
-
+  onReviewSubmit() {
     const review: Review = {
       token: sessionStorage.getItem('token'),
       movieId: this.id,
@@ -46,8 +44,11 @@ export class ReviewAdd {
       title: this.addReviewForm.value.title,
       content: this.addReviewForm.value.content,
     };
-    this.http.post('http://localhost:8080/api/v1/review', review).subscribe((res) =>{
-      console.log(res)
-      this.route.navigate(['/film/',this.id])});
+    this.http.post('http://localhost:8080/api/v1/review', review).subscribe((res) => {
+      console.log(res);
+      this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.route.navigate(['/film/', this.id]);
+      });
+    });
   }
 }

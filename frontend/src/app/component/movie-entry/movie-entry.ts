@@ -1,10 +1,9 @@
 import { Component, input } from '@angular/core';
-import {NgOptimizedImage} from '@angular/common';
 import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-movie-entry',
-  imports: [NgOptimizedImage, RouterLink],
+  imports: [RouterLink],
   templateUrl: './movie-entry.html',
   styleUrl: './movie-entry.css',
 })

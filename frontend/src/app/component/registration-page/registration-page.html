@@ -1,9 +1,9 @@
 <div class="content-center h-full w-full">
   <form class="flex flex-col items-center gap-y-2" [formGroup]="registrationForm" (ngSubmit)="onRegistrationSubmit()" >
-    <input class="bg-white rounded-3xl pl-2 outline-0 text-xl" type="text" formControlName="username" placeholder="Nazwa użytkownika">
-    <input class="bg-white rounded-3xl pl-2 outline-0 text-xl" type="email" formControlName="email" placeholder="Adres email">
-    <input class="bg-white rounded-3xl pl-2 outline-0 text-xl" type="password" formControlName="password" placeholder="Hasło">
-    <input class="text-white bg-ink-black rounded-3xl p-2.5 text-2xl shadow-md shadow-ink-black" type="submit" value="Zarejestruj się">
+    <input class="bg-white rounded-3xl p-2  pl-2 outline-0 text-xl" type="text" formControlName="username" placeholder="Nazwa użytkownika">
+    <input class="bg-white rounded-3xl p-2  pl-2 outline-0 text-xl" type="email" formControlName="email" placeholder="Adres email">
+    <input class="bg-white rounded-3xl p-2  pl-2 outline-0 text-xl" type="password" formControlName="password" placeholder="Hasło">
+    <input class="text-white bg-ink-black rounded-3xl p-2.5 text-2xl hover:bg-fresh-sky active:scale-95 transition-all shadow-md shadow-ink-black cursor-pointer" type="submit" value="Zarejestruj się">
   </form>
   @if(registred){
     <p class="bg-ink-black text-white text-center rounded-3xl mt-10 p-2.5">Sprawdź skrzynkę pocztową, aby ukończyć weryfikacje konta</p>
