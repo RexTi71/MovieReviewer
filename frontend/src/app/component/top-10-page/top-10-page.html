@@ -1,3 +1,8 @@
-<app-top-10-list></app-top-10-list>
-<app-top-10-list></app-top-10-list>
-<app-top-10-list></app-top-10-list>
+@for (movie of movies(); track movie.id){
+  <app-top-10-list [id]="movie.id" [position]=$index+1 [title]="movie.title" [description]="movie.description" [rating]="movie.rating" ></app-top-10-list>
+} @empty {
+  <div class="text-white text-2xl mt-10">
+    Trwa ładowanie filmów z serwera...
+  </div>
+}
+

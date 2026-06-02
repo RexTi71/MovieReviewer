@@ -1,17 +1,20 @@
-<div class="flex border-2 m-4 p-4 rounded-3xl border-amber-400 bg-deep-space-blue shadow-lg shadow-black/50 text-white duration-500 transition-transform scale-95 hover:scale-100 cursor-pointer">
-  <div class="flex flex-col items-center justify-center mr-15 space-y-2">
-    <p class="text-9xl">
-      <!--dynamicznie przydzielana cyfra pozycji-->
-      {{id()}}
-    </p>
-    <p class="text-2xl whitespace-nowrap">
-      {{ rating() }}/5 ★
-    </p>
-  </div>
-  <img alt="michal" class=" min-w-1/6 min-h-48 mr-15" ngSrc="{{imageUrl()}}" height="906" width="640">
-  <div class="flex flex-col justify-center">
-    <p class="line-clamp-6">
-      {{description()}}
-    </p>
+<div class="border-2 rounded-3xl border-amber-400 bg-deep-space-blue shadow-lg shadow-black/50 text-white duration-200 transition-all scale-95 hover:scale-100 cursor-pointer overflow-hidden relative group" [routerLink]="['/film',id()]">
+  <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-linear-to-l from-deep-space-blue to-ink-black hover:animate-gradient z-0"></div>
+  <div class="flex m-4 p-4 relative">
+    <div class="flex flex-col items-center justify-center mr-15 space-y-2">
+      <p class="text-9xl">
+        {{position()}}
+      </p>
+      <p class="text-2xl whitespace-nowrap">
+        {{ rating() }}/5 ★
+      </p>
+    </div>
+    <img alt="michal" class="max-w-1/6 max-h-48 mr-15" ngSrc="{{imageUrl()}}" height="906" width="640">
+    <div class="flex flex-col justify-center">
+      <h1 class="text-3xl text-center leading-8 pb-5 font-bold">{{title()}}</h1>
+      <p class="line-clamp-4">
+        {{description()}}
+      </p>
+    </div>
   </div>
 </div>
