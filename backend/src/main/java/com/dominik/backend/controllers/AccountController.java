@@ -5,10 +5,14 @@ import com.dominik.backend.model.Account;
 import com.dominik.backend.service.AccountService;
 import com.dominik.backend.service.filemanager.FileStorage;
 import com.dominik.backend.service.jwt.JWT;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -33,8 +37,18 @@ public class AccountController {
         return accountService.login(accountDto.getUsername(), accountDto.getPassword());
     }
     @GetMapping("/verify")
-    public ResponseEntity<String> verifyEmail(@RequestParam String token) {
-        return accountService.verifyEmail(token);
+    public ResponseEntity<String> verifyEmail(@RequestParam String token,
+                              HttpServletResponse response) {
+        ResponseEntity<String> resp = accountService.verifyEmail(token);
+        try{
+            if(resp.getStatusCode()== HttpStatusCode.valueOf(200))
+                //TODO:SUCCES w url
+                response.sendRedirect("http://localhost:4200/login");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resp;
     }
 
     @PostMapping("/logout")
