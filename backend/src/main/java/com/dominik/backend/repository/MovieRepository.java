@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie,Long> {
-    List<Movie> findByTitleContaining(String title);
+    List<Movie> findByTitleContainingIgnoreCase(String title);
     @Modifying
     @Transactional
     @Query("update Movie m set m.rating = :rating where m.id = :movieId")

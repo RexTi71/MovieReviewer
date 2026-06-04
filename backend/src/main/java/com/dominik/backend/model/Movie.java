@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -23,11 +24,11 @@ public class Movie {
     private String description;
     private Float rating;
     private LocalDate productionDate;
+    @ManyToMany
+    @JoinTable(
+            name = "categoryxmovie",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories;
 
-
-    public Movie(String title, String description, LocalDate productionDate){
-        this.title = title;
-        this.description = description;
-        this.productionDate = productionDate;
-    }
 }

@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -18,4 +20,6 @@ public class Category {
     @Column(nullable = false)
     private String name;
     private String description;
+    @ManyToMany(mappedBy = "categories")
+    private Set<Movie> movies;
 }

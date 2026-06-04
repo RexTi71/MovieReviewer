@@ -6,14 +6,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs';
-
-export type Movie = {
-  id: number;
-  title: string;
-  description: string;
-  rating: string;
-  productionDate: string;
-};
+import { Movie } from '../../interface/movie';
 
 @Component({
   selector: 'app-home-page',

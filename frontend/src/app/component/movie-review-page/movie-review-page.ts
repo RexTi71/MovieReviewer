@@ -1,11 +1,11 @@
 import { Component, inject} from '@angular/core';
-import { DatePipe, NgOptimizedImage} from '@angular/common';
+import { DatePipe } from '@angular/common';
 import {MovieReview} from '../movie-review/movie-review';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Movie } from '../home-page/home-page';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { ReviewAdd } from '../review-add/review-add';
+import { Movie } from '../../interface/movie';
 type Review = {
   movieId: string;
   title: string;
@@ -16,7 +16,7 @@ type Review = {
 }
 @Component({
   selector: 'app-movie-review-page',
-  imports: [NgOptimizedImage, MovieReview,  DatePipe, ReviewAdd],
+  imports: [ MovieReview,  DatePipe, ReviewAdd],
   templateUrl: './movie-review-page.html',
   styleUrl: './movie-review-page.css',
 })
@@ -35,6 +35,5 @@ export class MovieReviewPage {
   onClickScrollTo(el: HTMLElement){
     el.scrollIntoView();
   }
-  //TODO: awatary
 
 }

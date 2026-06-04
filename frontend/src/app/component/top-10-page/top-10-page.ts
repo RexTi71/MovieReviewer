@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { Top10List } from '../top-10-list/top-10-list';
-import { Movie } from '../home-page/home-page';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { HttpClient } from '@angular/common/http';
+import { Movie } from '../../interface/movie';
 
 @Component({
   selector: 'app-top-10-page',

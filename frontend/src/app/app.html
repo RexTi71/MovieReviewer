@@ -1,6 +1,8 @@
 <nav class=" flex z-10 bg-ink-black w-screen pb-2 pt-2 h-fit top-0 sticky  shadow-xl shadow-ink-black items-center">
-  <div class="w-5/6 h-full flex justify-center items-center gap-12">
+  <div class="w-1/6 h-full flex justify-center items-center">
     <app-nav-item class="font-extrabold" [text]="'MovieReviewer'" routerLink="/"/>
+  </div>
+  <div class="w-4/6 h-full flex justify-center items-center gap-12">
     <app-nav-item [text]="'Filmy'" (click)="onNavItemClick('Filmy')" />
     <app-nav-item [text]="'Programy TV'" (click)="onNavItemClick('Programy TV')"/>
     <app-nav-item [text]="'Top 10 lista'" routerLink="/top10"/>
