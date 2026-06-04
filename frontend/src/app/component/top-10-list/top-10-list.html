@@ -2,12 +2,30 @@
   <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-linear-to-l from-deep-space-blue to-ink-black hover:animate-gradient z-0"></div>
   <div class="flex m-4 p-4 relative">
     <div class="flex flex-col items-center justify-center mr-15 space-y-2">
-      <p class="text-9xl">
+      <p class="text-9xl" [ngClass]="{
+      'text-amber-300': position() == 1,
+      'text-mist-400': position() == 2,
+      'text-yellow-800': position() == 3,
+      'text-white': position() > 3,
+      }">
         {{position()}}
       </p>
-      <p class="text-2xl whitespace-nowrap">
-        {{ rating() }}/5 ★
-      </p>
+      <div class="flex">
+        @for (stars of fullStarsArray(); track stars){
+          <svg class="h-6 w-6 shrink-0" fill="#ffffff" viewBox="0 0 36 36" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path class="clr-i-solid clr-i-solid-path-1" d="M34,16.78a2.22,2.22,0,0,0-1.29-4l-9-.34a.23.23,0,0,1-.2-.15L20.4,3.89a2.22,2.22,0,0,0-4.17,0l-3.1,8.43a.23.23,0,0,1-.2.15l-9,.34a2.22,2.22,0,0,0-1.29,4l7.06,5.55a.23.23,0,0,1,.08.24L7.35,31.21a2.22,2.22,0,0,0,3.38,2.45l7.46-5a.22.22,0,0,1,.25,0l7.46,5a2.2,2.2,0,0,0,2.55,0,2.2,2.2,0,0,0,.83-2.4l-2.45-8.64a.22.22,0,0,1,.08-.24Z"></path>
+          </svg>
+        }@empty {
+          <p>
+            brak ratingu
+          </p>
+        }
+        @if (partStars() > 0){
+          <svg [style.clip-path]="'inset(0 ' + (100 - partStars()) + '% 0 0)'" class="h-6 w-6 shrink-0'" fill="#ffffff" viewBox="0 0 36 36" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path class="clr-i-solid clr-i-solid-path-1" d="M34,16.78a2.22,2.22,0,0,0-1.29-4l-9-.34a.23.23,0,0,1-.2-.15L20.4,3.89a2.22,2.22,0,0,0-4.17,0l-3.1,8.43a.23.23,0,0,1-.2.15l-9,.34a2.22,2.22,0,0,0-1.29,4l7.06,5.55a.23.23,0,0,1,.08.24L7.35,31.21a2.22,2.22,0,0,0,3.38,2.45l7.46-5a.22.22,0,0,1,.25,0l7.46,5a2.2,2.2,0,0,0,2.55,0,2.2,2.2,0,0,0,.83-2.4l-2.45-8.64a.22.22,0,0,1,.08-.24Z"></path>
+          </svg>
+        }
+      </div>
     </div>
     <img alt="michal" class="max-w-1/6 max-h-48 mr-15" ngSrc="{{imageUrl()}}" height="906" width="640">
     <div class="flex flex-col justify-center">

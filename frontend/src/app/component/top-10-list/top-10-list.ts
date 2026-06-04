@@ -1,10 +1,10 @@
-import { Component, input } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
+import { Component, computed, input } from '@angular/core';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-top-10-list',
-  imports: [NgOptimizedImage, RouterModule],
+  imports: [NgOptimizedImage, RouterModule, NgClass],
   templateUrl: './top-10-list.html',
   styleUrl: './top-10-list.css',
 })
@@ -20,4 +20,12 @@ export class Top10List {
       '      It was popularised thanks to these sheets and more recently with desktop publishing software including versions of Lorem Ipsum.',
   ); //nie mowimy o tym
   imageUrl = input<string>('michael.jpg');
+
+  //zmienne pomocnicze
+  stars = computed(() => parseFloat(this.rating()));
+
+  fullStars = computed(() => Math.floor(this.stars()));
+  partStars = computed(()=> Math.round((this.stars() - this.fullStars())*10000)/100);
+
+  fullStarsArray = computed(() => Array(this.fullStars()).fill(1));
 }
