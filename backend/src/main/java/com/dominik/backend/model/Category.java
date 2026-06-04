@@ -1,5 +1,6 @@
 package com.dominik.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,6 @@ public class Category {
     private String name;
     private String description;
     @ManyToMany(mappedBy = "categories")
+    @JsonIgnoreProperties("categories")
     private Set<Movie> movies;
 }

@@ -19,7 +19,7 @@ public class AvatarController {
     @Autowired
     JWT jwt;
 
-    FileStorage avatarStorage = new FileStorage("avatary/");
+    FileStorage avatarStorage = new FileStorage("avatars/");
 
     @Autowired
     AccountService accountService;

@@ -12,6 +12,9 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class FileStorage {
     private final Path rootLocation;
@@ -38,7 +41,7 @@ public class FileStorage {
             return max+1;
         }
         catch (IOException e) {
-            throw new StorageException("Failed to read stored files", e);
+            throw new StorageException("Nie udało się odczytać zasobu.", e);
         }
     };
     public FileStorage(String path){
@@ -46,19 +49,19 @@ public class FileStorage {
         new File(path).mkdirs();
     }
 
-    Path getLocation(Long id){
+    private Path getLocation(Long id){
         return this.rootLocation.resolve(id+".png")
                 .normalize().toAbsolutePath();
     }
     public void store(MultipartFile file,Long id){
         try {
             if (file.isEmpty()) {
-                throw new StorageException("Failed to store empty file.");
+                throw new StorageException("Nie można przechować pustego pliku.");
             }
             Path destinationFile = getLocation(id);
             if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
                 throw new StorageException(
-                        "Cannot store file outside current directory.");
+                        "Nie można przechować zasób poza aktualną ścieżką.");
             }
             try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, destinationFile,
@@ -66,7 +69,7 @@ public class FileStorage {
             }
         }
         catch (IOException e) {
-            throw new StorageException("Failed to store file.", e);
+            throw new StorageException("Nie udało się przehcować zasobu", e);
         }
     };
     Resource fallbackImage(){
@@ -80,7 +83,7 @@ public class FileStorage {
         if(r==null){
             r = fallbackImage();
             if (r==null)
-                throw new StorageException("missing fallback.png");
+                throw new StorageException("Brakuje fallback.png");
         }
         return r;
     };
@@ -90,7 +93,7 @@ public class FileStorage {
             Resource resource = new UrlResource(getLocation(id).toUri());
             return resource.exists();
         }catch (MalformedURLException e) {
-            throw new StorageException("kinda bullshit czy cos",e);
+            throw new StorageException("Podany zasób nie istnieje", e);
         }
 
     }
@@ -106,7 +109,7 @@ public class FileStorage {
             }
             else {
                 throw new StorageException(
-                        "Could not read file: " + file);
+                        "Nie można odczytać pliku: " + file);
 
             }
         }

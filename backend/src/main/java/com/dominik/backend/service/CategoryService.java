@@ -11,16 +11,17 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CategoryService {
+
     private final CategoryRepository categoryRepository;
 
-    public ResponseEntity<List<Category>> getAllCategories(){
-        return ResponseEntity.ok(categoryRepository.findAll());
+    public List<Category> getAllCategories(){
+        return categoryRepository.findAll();
     }
-    public ResponseEntity<String> addCategory(Category category){
-        Category newCategory = categoryRepository.save(category);
-        if(categoryRepository.findById(newCategory.getId()).isEmpty()){
-            return ResponseEntity.badRequest().body("Nie udało się dodać kategorii");
+    public String addCategory(Category category){
+        categoryRepository.save(category);
+        if(categoryRepository.findById(category.getId()).isEmpty()){
+            throw new IllegalArgumentException("Nie udało się dodać kategorii");
         }
-        return ResponseEntity.ok("Pomyślnie dodano kategorie");
+        return "Pomyślnie dodano kategorie";
     }
 }

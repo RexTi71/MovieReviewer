@@ -13,5 +13,26 @@ INSERT INTO movie (title, description, production_date) VALUES
 
                                                             ('Władca Pierścieni: Drużyna Pierścienia', 'Spokojne życie w sielskim Shire zostaje brutalnie przerwane, gdy stary hobbit Bilbo Baggins przekazuje swojemu siostrzeńcowi, Frodowi, niezwykły pierścień. Czarodziej Gandalf Szary odkrywa przerażającą prawdę: jest to Jedyny Pierścień, potężny artefakt wykuty tysiące lat temu przez Mrocznego Władcę Saurona, by zniewolić ludy Śródziemia. Sauron przebudził się, a jego mroczne siły gorączkowo poszukują zgubionego klejnotu. Aby zapobiec zagładzie, Pierścień musi zostać zniszczony, co jest możliwe tylko w miejscu jego powstania – w ogniu Góry Przeznaczenia w sercu nieprzyjaznego Mordoru. Podczas narady w elfickim Rivendell, Frodo zgłasza się na ochotnika. Wokół niego tworzy się niezwykła Drużyna Pierścienia, w skład której wchodzą przedstawiciele wolnych ras: ludzie Aragorn i Boromir, elf Legolas, krasnolud Gimli, czarodziej Gandalf oraz hobbici.', '2001-12-19'),
 
-                                                            ('Pulp Fiction', 'Przełomowe dzieło Quentina Tarantino, które zredefiniowało kino lat dziewięćdziesiątych dzięki nieliniowej narracji, błyskotliwym dialogom i mieszance popkultury z brutalną przemocą. Film splata ze sobą trzy odrębne, lecz przecinające się historie z podziemia Los Angeles. W pierwszej śledzimy losy Vincenta Vegi i Julesa Winnfielda, dwóch elokwentnych płatnych morderców na usługach potężnego mafioza, Marsellusa Wallace''a. Vincent otrzymuje zadanie: ma zająć się żoną szefa, Mią, co kończy się dramatyczną walką o jej życie. Druga historia skupia się na Butchu Coolidge''u, starzejącym się bokserze, który bierze łapówkę za przegranie walki, ale oszukuje bossa, by odzyskać bezcenny złoty zegarek ojca. W tle przewija się również motyw napadu na restaurację przez dwójkę drobnych złodziejaszków.', '1994-10-14');
+                                                            ('Pulp Fiction', 'Przełomowe dzieło Quentina Tarantino, które zredefiniowało kino lat dziewięćdziesiątych dzięki nieliniowej narracji, błyskotliwym dialogom i mieszance popkultury z brutalną przemocą. Film splata ze sobą trzy odrębne, lecz przecinające się historie z podziemia Los Angeles. W pierwszej śledzimy losy Vincenta Vegi i Julesa Winnfielda, dwóch elokwentnych płatnych morderców na usługach potężnego mafioza, Marsellusa Wallace''a. Vincent otrzymuje zadanie: ma zająć się żoną szefa, Mią, co kończy się dramatyczną walką o jej życie. Druga historia skupia się na Butchu Coolidge''u, starzejącym się bokserze, który bierze łapówkę za przegranie walki, ale oszukuje bossa, by odzyskać bezcenny złoty zegarek ojca. W tle przewija się również motyw napadu na restaurację przez dwójkę drobnych złodziejaszków.', '1994-10-14'),
+                                                            ('Michael', 'Filmowa opowieść o życiu i dziedzictwie jednego z najbardziej wpływowych artystów w historii – Michaela Jacksona. Produkcja przybliża jego drogę na szczyt, od występów z rodzinnym zespołem Jackson Five, przez solowe triumfy, aż po skomplikowane życie osobiste Króla Popu.', '2026-04-24');
+INSERT INTO category (name, description) VALUES
+                                             ('Sci-Fi', 'Filmy fantastycznonaukowe, alternatywne rzeczywistości, zaawansowana technologia'),
+                                             ('Thriller', 'Trzymające w napięciu thrillery psychologiczne i sensacyjne'),
+                                             ('Kryminał', 'Historie gangsterskie, mafijne porachunki i świat przestępczy'),
+                                             ('Dramat', 'Głębokie wątki osobiste, konflikty moralne i dramatyczne wybory życiowe'),
+                                             ('Akcja', 'Szybkie tempo, widowiskowe starcia i pościgi'),
+                                             ('Fantasy', 'Magiczne światy, epickie wyprawy i mityczne stworzenia'),
+                                             ('Biograficzny', 'Historie oparte na faktach, przedstawiające losy autentycznych postaci'),
+                                             ('Muzyczny', 'Filmy skupione wokół muzyki, tańca i historii artystów');
 
+
+INSERT INTO categoryxmovie (movie_id, category_id) VALUES
+(1, 1), (1, 2), (1, 5),
+(2, 1), (2, 5),
+(3, 3), (3, 4),
+(4, 1), (4, 5),
+(5, 1), (5, 5),
+(6, 5), (6, 3), (6, 2),
+(7, 6), (7, 5),
+(8, 3), (8, 4),
+(9, 7), (9, 4), (9, 8);
