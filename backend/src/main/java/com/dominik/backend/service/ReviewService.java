@@ -18,7 +18,7 @@ public class ReviewService
 {
     private final ReviewRepository reviewRepository;
     private final MovieRepository movieRepository;
-    private final HomeService homeService;
+    private final MovieService movieService;
     private final AccountService accountService;
 
     public List<ReviewResponseDto> getReviewsForMovie(Long id){
@@ -47,7 +47,7 @@ public class ReviewService
         newReview.setContent(reviewDto.getContent());
         newReview.setRating(reviewDto.getRating());
         newReview.setAccount(accountService.getAccountFromToken(reviewDto.getToken()));
-        newReview.setMovie(homeService.getMovie(reviewDto.getMovieId()));
+        newReview.setMovie(movieService.getMovie(reviewDto.getMovieId()));
 
         reviewRepository.save(newReview);
         updateRating(newReview.getMovie().getId());

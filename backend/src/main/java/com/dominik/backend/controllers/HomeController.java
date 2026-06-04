@@ -1,9 +1,9 @@
 package com.dominik.backend.controllers;
 
+import com.dominik.backend.dto.MovieDto;
 import com.dominik.backend.model.Movie;
-import com.dominik.backend.service.HomeService;
+import com.dominik.backend.service.MovieService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class HomeController {
 
-    private final HomeService service;
+    private final MovieService service;
 
     @GetMapping("/movies")
     public ResponseEntity<List<Movie>> getMovies(){

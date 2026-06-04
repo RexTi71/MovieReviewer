@@ -23,11 +23,14 @@ export class HomePage {
       switchMap((params) => {
         //Pobierz wszystkie filmy
         let url = 'http://localhost:8080/api/v1/movies';
-        const myParam = params.get('query');
+        const query = params.get('query');
+        const catName = params.get('name');
         //Jezeli uzytkownik szuka konkretny film
         //wyslij na zapytanie na ten adres
-        if (myParam) {
-          url = `http://localhost:8080/api/v1/search/${myParam}`;
+        if (query) {
+          url = `http://localhost:8080/api/v1/search/${query}`;
+        }else if(catName){
+          url = `http://localhost:8080/api/v1/category/${catName}`
         }
 
         return this.http.get<Movie[]>(url);

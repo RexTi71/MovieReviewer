@@ -1,7 +1,10 @@
 package com.dominik.backend.controllers;
 
+import com.dominik.backend.dto.MovieDto;
 import com.dominik.backend.model.Category;
+import com.dominik.backend.model.Movie;
 import com.dominik.backend.service.CategoryService;
+import com.dominik.backend.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,7 @@ import java.util.List;
 public class CategoryController {
 
     private final CategoryService categoryService;
+    private final MovieService movieService;
 
     @GetMapping("/categories")
     public ResponseEntity<List<Category>> getAllCategories(){
@@ -30,5 +34,9 @@ public class CategoryController {
             log.warn(ex.getMessage());
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
+    }
+    @GetMapping("/category/{name}")
+    public ResponseEntity<List<MovieDto>> getAllMoviesByCategory(@PathVariable("name") String category){
+        return ResponseEntity.ok(movieService.getAllMoviesByCategory(category));
     }
 }

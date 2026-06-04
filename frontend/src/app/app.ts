@@ -3,19 +3,17 @@ import {RouterModule} from '@angular/router';
 import {NavItem} from './component/nav-item/nav-item';
 
 import {Searchbar} from './component/searchbar/searchbar';
+import { CategoryMenu } from './component/category-menu/category-menu';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterModule, NavItem, Searchbar],
+  imports: [RouterModule, NavItem, Searchbar, CategoryMenu],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('frontend');
   protected readonly PluginArray = PluginArray;
-  onNavItemClick(tabName : string){
-    console.log('Kliknięto w ', tabName);
-  }
 
   protected readonly sessionStorage = sessionStorage;
 }

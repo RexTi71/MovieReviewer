@@ -13,6 +13,11 @@ export const routes: Routes = [
     title: 'Strona główna',
   },
   {
+    path: 'kategoria/:name',
+    component: HomePage,
+    title: 'Strona główna',
+  },
+  {
     path: 'szukaj/:query',
     component: HomePage,
     title: 'Strona główna',

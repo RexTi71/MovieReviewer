@@ -1,5 +1,6 @@
 package com.dominik.backend.repository;
 
+import com.dominik.backend.dto.MovieDto;
 import com.dominik.backend.model.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,10 +13,12 @@ import java.util.List;
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie,Long> {
+
     List<Movie> findByTitleContainingIgnoreCase(String title);
     @Modifying
     @Transactional
     @Query("update Movie m set m.rating = :rating where m.id = :movieId")
     void updateMovieRating(@Param("rating") Float rating,
                            @Param("movieId") Long id);
+    List<MovieDto> findAllByCategories_Name(String name);
 }
