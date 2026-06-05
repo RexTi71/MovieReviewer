@@ -1,7 +1,7 @@
 import {
   Title
-} from "./chunk-SSPSO7F7.js";
-import "./chunk-LEPAAGE2.js";
+} from "./chunk-OIQCAJIA.js";
+import "./chunk-JB6OHV5N.js";
 import {
   HashLocationStrategy,
   Location,
@@ -11,11 +11,11 @@ import {
   PathLocationStrategy,
   PlatformNavigation,
   ViewportScroller
-} from "./chunk-QNN2MVQG.js";
+} from "./chunk-7IOYQILB.js";
 import {
   LOCATION_INITIALIZED,
   PlatformLocation
-} from "./chunk-CW7UA6VJ.js";
+} from "./chunk-H4T3FDAO.js";
 import {
   APP_BOOTSTRAP_LISTENER,
   ApplicationRef,
@@ -31,6 +31,7 @@ import {
   HostAttributeToken,
   HostListener,
   IS_ENABLED_BLOCKING_INITIAL_NAVIGATION,
+  IS_HYDRATION_DOM_REUSE_ENABLED,
   Injectable,
   Input,
   NgModule,
@@ -65,7 +66,7 @@ import {
   ɵɵloadQuery,
   ɵɵqueryRefresh,
   ɵɵsanitizeUrlOrResourceUrl
-} from "./chunk-7G5ZOCLU.js";
+} from "./chunk-KJNFVLLV.js";
 import {
   DOCUMENT,
   DestroyRef,
@@ -94,7 +95,7 @@ import {
   ɵɵdefineInjectable,
   ɵɵdefineInjector,
   ɵɵinject
-} from "./chunk-IP2T2NBJ.js";
+} from "./chunk-JQXLRNHR.js";
 import {
   BehaviorSubject,
   EMPTY,
@@ -5216,6 +5217,9 @@ var RouterScroller = class _RouterScroller {
   lastSource = IMPERATIVE_NAVIGATION;
   restoredId = 0;
   store = {};
+  isHydrating = inject(IS_HYDRATION_DOM_REUSE_ENABLED, {
+    optional: true
+  }) ?? false;
   urlSerializer = inject(UrlSerializer);
   zone = inject(NgZone);
   viewportScroller = inject(ViewportScroller);
@@ -5224,6 +5228,11 @@ var RouterScroller = class _RouterScroller {
     this.options = options;
     this.options.scrollPositionRestoration ||= "disabled";
     this.options.anchorScrolling ||= "disabled";
+    if (this.isHydrating) {
+      inject(ApplicationRef).whenStable().then(() => {
+        this.isHydrating = false;
+      });
+    }
   }
   init() {
     if (this.options.scrollPositionRestoration !== "disabled") {
@@ -5270,6 +5279,7 @@ var RouterScroller = class _RouterScroller {
     });
   }
   scheduleScrollEvent(routerEvent, anchor) {
+    if (this.isHydrating) return;
     const scroll = untracked(this.transitions.currentNavigation)?.extras.scroll;
     this.zone.runOutsideAngular(async () => {
       await new Promise((resolve) => {
@@ -5984,7 +5994,7 @@ function mapToCanDeactivate(providers) {
 function mapToResolve(provider) {
   return (...params) => inject(provider).resolve(...params);
 }
-var VERSION = new Version("21.2.13");
+var VERSION = new Version("21.2.16");
 export {
   ActivatedRoute,
   ActivatedRouteSnapshot,

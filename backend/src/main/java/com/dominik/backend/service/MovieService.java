@@ -5,6 +5,7 @@ import com.dominik.backend.model.Movie;
 import com.dominik.backend.repository.MovieRepository;
 import com.dominik.backend.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -27,4 +28,6 @@ public class MovieService {
         return movieRepository.findAllByCategories_Name(category);
 
     }
+    public List<Movie> getTop10(){return movieRepository.getTop10(PageRequest.of(0,10));}
+
 }

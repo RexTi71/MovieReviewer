@@ -35,7 +35,6 @@ public class HomeController {
     public ResponseEntity<List<Movie>> searchMovie(@PathVariable String query){
         return ResponseEntity.ok(service.searchMovie(query));
     }
-
-    //@GetMapping("/top10")
-    //TODO:Доделать получение топ-10 фильмов по рейтингу
+    @GetMapping("/top10")
+    public List<Movie> getTop10(){return service.getTop10();}
 }
