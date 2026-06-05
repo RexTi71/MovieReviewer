@@ -1,4 +1,4 @@
-<div class="flex justify-center gap-2 flex-wrap w-full h-full">
+<div class="flex justify-center gap-x-2 gap-y-0 gap flex-wrap w-full h-full">
   @for (movie of movies(); track movie.id){
     <app-movie-entry [id]="movie.id" [title]="movie.title" [productionDate]="movie.productionDate | date:'dd.MM.yyyy' +'r.'" [reviews]="movie.rating"  [imageUrl]="`http://localhost:8080/api/poster/${movie.id}`" />
   }@empty {

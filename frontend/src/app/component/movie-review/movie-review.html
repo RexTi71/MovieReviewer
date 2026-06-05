@@ -1,4 +1,4 @@
-<div class="bg-deep-space-blue p-2.5 flex gap-10 border-2 shadow-sm shadow-ink-black border-gray-400 rounded-3xl w-full">
+<div class="bg-deep-space-blue p-2.5 flex gap-10 border-2 shadow-sm shadow-ink-black border-slate-500 rounded-3xl w-full">
   <div class="flex flex-col">
     <img [src]="imageUrl()"  width="125" height="125" alt="awatar użytkownika">
     <h1 class="text-gray-400 text-center">{{username()}}</h1>
@@ -17,3 +17,7 @@
     </p>
   </div>
 </div>
+<form class="w-full pt-2.5 pr-15 flex gap-x-4 justify-end">
+  <input class="p-2.5 bg-white w-1/2 outline-0 border border-slate-500 rounded-2xl" type="text" placeholder="Napisz komentarz...">
+  <input class="bg-ink-black text-white rounded-3xl hover:bg-fresh-sky active:scale-95 transition-all cursor-pointer p-2.5" type="submit" value="Opublikuj">
+</form>
