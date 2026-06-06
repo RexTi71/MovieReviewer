@@ -3,12 +3,14 @@ package com.dominik.backend.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
 @Data
 public class Comment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -27,5 +29,5 @@ public class Comment {
     @Column(nullable = false)
     private String content;
     @Column(nullable = false)
-    private Date date;
+    private LocalDate date;
 }

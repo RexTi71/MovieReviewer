@@ -1,6 +1,6 @@
 import {
   PlatformLocation
-} from "./chunk-H4T3FDAO.js";
+} from "./chunk-FVVZNHEA.js";
 import {
   ApplicationRef,
   Attribute,
@@ -47,7 +47,7 @@ import {
   ɵɵgetInheritedFactory,
   ɵɵinjectAttribute,
   ɵɵstyleProp
-} from "./chunk-KJNFVLLV.js";
+} from "./chunk-IMYMSJZA.js";
 import {
   DOCUMENT,
   DestroyRef,
@@ -64,7 +64,7 @@ import {
   ɵɵdefineInjectable,
   ɵɵdefineInjector,
   ɵɵinject
-} from "./chunk-JQXLRNHR.js";
+} from "./chunk-LA7SL2HP.js";
 import {
   Subject,
   __spreadProps,
@@ -365,7 +365,7 @@ function _stripBasePath(basePath, url) {
   return url;
 }
 function _stripIndexHtml(url) {
-  return url.replace(/\/index\.html$/, "");
+  return url.replace(/\/index.html$/, "");
 }
 function _stripOrigin(baseHref) {
   const isAbsoluteUrl2 = new RegExp("^(https?:)?//").test(baseHref);
@@ -1391,10 +1391,6 @@ function formatNumberToLocaleString(value, pattern, locale, groupSymbol, decimal
         maxFraction = parseIntAutoRadix(maxFractionPart);
       } else if (minFractionPart != null && minFraction > maxFraction) {
         maxFraction = minFraction;
-      }
-      const MAX_ALLOWED_DIGITS = 100;
-      if (minInt > MAX_ALLOWED_DIGITS || minFraction > MAX_ALLOWED_DIGITS || maxFraction > MAX_ALLOWED_DIGITS) {
-        throw new RuntimeError(2306, ngDevMode && `${digitsInfo} is not a valid digit info. Exceeded maximum limits of ${MAX_ALLOWED_DIGITS} digits.`);
       }
     }
     roundNumber(parsedNumber, minFraction, maxFraction);
@@ -3302,7 +3298,7 @@ function isPlatformBrowser(platformId) {
 function isPlatformServer(platformId) {
   return platformId === PLATFORM_SERVER_ID;
 }
-var VERSION = new Version("21.2.16");
+var VERSION = new Version("21.2.13");
 var ViewportScroller = class _ViewportScroller {
   static ɵprov = ɵɵdefineInjectable({
     token: _ViewportScroller,
@@ -4133,13 +4129,13 @@ var NgOptimizedImage = class _NgOptimizedImage {
       placeholderResolution
     } = this.config;
     if (placeholderInput === true) {
-      return `url("${escapeCssUrl(this.callImageLoader({
+      return `url(${this.callImageLoader({
         src: this.ngSrc,
         width: placeholderResolution,
         isPlaceholder: true
-      }))}")`;
+      })})`;
     } else if (typeof placeholderInput === "string") {
-      return `url("${escapeCssUrl(placeholderInput)}")`;
+      return `url(${placeholderInput})`;
     }
     return null;
   }
@@ -4572,9 +4568,6 @@ function unwrapSafeUrl(value) {
   }
   return unwrapSafeValue(value);
 }
-function escapeCssUrl(input) {
-  return input.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
-}
 function booleanOrUrlAttribute(value) {
   if (typeof value === "string" && value !== "true" && value !== "false" && value !== "") {
     return value;
@@ -4674,4 +4667,4 @@ export {
   PRECONNECT_CHECK_BLOCKLIST,
   NgOptimizedImage
 };
-//# sourceMappingURL=chunk-7IOYQILB.js.map
+//# sourceMappingURL=chunk-I5TTZTVG.js.map

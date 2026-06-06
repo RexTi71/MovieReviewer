@@ -640,7 +640,7 @@ var Version = class {
     this.patch = parts.slice(2).join(".");
   }
 };
-var VERSION = new Version("21.2.16");
+var VERSION = new Version("21.2.13");
 var DOC_PAGE_BASE_URL = (() => {
   const full = VERSION.full;
   const isPreRelease = full.includes("-next") || full.includes("-rc") || full === "0.0.0-PLACEHOLDER";
@@ -4233,4 +4233,4 @@ export {
   encapsulateResourceError,
   ResourceValueError
 };
-//# sourceMappingURL=chunk-JQXLRNHR.js.map
+//# sourceMappingURL=chunk-LA7SL2HP.js.map

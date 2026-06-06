@@ -12,7 +12,9 @@ import java.util.List;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, ReviewId> {
+
     List<Review> findAllByMovieId(Long id);
+    Review findByAccountIdAndMovieId(Long accountId, Long movieId);
     @Query("select avg(r.rating) from Review r where r.movie.id=:id")
     Float avgRating(@Param("id") Long id);
 }

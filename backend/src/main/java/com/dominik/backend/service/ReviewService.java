@@ -56,4 +56,8 @@ public class ReviewService
         Float averageRating = reviewRepository.avgRating(movieId);
         movieRepository.updateMovieRating(averageRating, movieId);
     }
+    public Review findByAccountIdAndMovieId(Long accountId,
+                                            Long movieId){
+        return reviewRepository.findByAccountIdAndMovieId(accountId, movieId);
+    }
 }

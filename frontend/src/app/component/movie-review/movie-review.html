@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-<div class="bg-deep-space-blue p-2.5 flex gap-10 border-2 shadow-sm shadow-ink-black border-slate-500 rounded-3xl w-full">
-  <div class="flex flex-col">
-=======
 <div class="bg-deep-space-blue p-2.5 flex gap-10 border-2 shadow-sm shadow-ink-black border-slate-400 rounded-3xl w-full">
   <div class="flex flex-col w-1/6">
->>>>>>> 5f81ba2 (Polish)
     <img [src]="imageUrl()"  width="125" height="125" alt="awatar użytkownika">
     <h1 class="text-gray-400 text-center">{{username()}}</h1>
   </div>
@@ -17,12 +12,12 @@
       </svg>
       <p class="text-gray-300 text-3xl whitespace-normal w-1/4 leading-0">{{rating()}}/5</p>
     </div>
-    <p class="text-gray-300">
+    <p class="text-gray-300 break-all">
       {{content()}}
     </p>
   </div>
 </div>
-<form class="w-full pt-2.5 pr-15 flex gap-x-4 justify-end">
-  <input class="p-2.5 bg-white w-1/2 outline-0 border border-slate-500 rounded-2xl" type="text" placeholder="Napisz komentarz...">
-  <input class="bg-ink-black text-white rounded-3xl hover:bg-fresh-sky active:scale-95 transition-all cursor-pointer p-2.5" type="submit" value="Opublikuj">
+<form class="w-full pt-2.5 pr-15 flex gap-x-4 justify-end" [formGroup]="commentAddForm" (ngSubmit)="onSubmit()">
+  <input class="p-2.5 w-1/2 outline-0 border-b-2 border-b-slate-500 text-gray-200" formControlName="content" type="text" placeholder="Napisz komentarz...">
+  <input class="text-white rounded-3xl hover:bg-fresh-sky active:scale-95 transition-all cursor-pointer p-2.5" type="submit" value="Opublikuj">
 </form>
