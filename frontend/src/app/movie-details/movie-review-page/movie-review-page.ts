@@ -7,14 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ReviewAdd } from '../review-add/review-add';
 import { Movie } from '../../interface/movie';
 import { ReviewComment } from '../review-comment/review-comment';
-type Review = {
-  movieId: string;
-  title: string;
-  content: string;
-  rating: string;
-  userId: string;
-  username: string;
-}
+import { Review } from '../../interface/review';
+
 @Component({
   selector: 'app-movie-review-page',
   imports: [MovieReview, DatePipe, ReviewAdd, ReviewComment],

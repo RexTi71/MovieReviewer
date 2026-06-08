@@ -1,6 +1,6 @@
 <div class="bg-deep-space-blue p-2.5 flex gap-10 border-2 shadow-sm shadow-ink-black border-slate-400 rounded-3xl w-full">
-  <div class="flex flex-col w-1/6">
-    <img [src]="imageUrl()"  width="125" height="125" alt="awatar użytkownika">
+  <div class="flex flex-col w-1/6 items-center">
+    <img class="rounded-[50%] aspect-square" [src]="imageUrl()"  width="125" height="125" alt="awatar użytkownika">
     <h1 class="text-gray-400 text-center">{{username()}}</h1>
   </div>
   <div class="flex flex-col w-5/6">
@@ -16,6 +16,12 @@
       {{content()}}
     </p>
   </div>
+</div>
+<div class="pt-2.5 flex flex-col gap-y-2.5">
+
+@for (comment of comments(); track comment.username){
+  <app-review-comment [avatarUrl]="`http://localhost:8080/api/avatar/${comment.userId}`" [username]="comment.username" [content]="comment.content"/>
+}
 </div>
 <form class="w-full pt-2.5 pr-15 flex gap-x-4 justify-end" [formGroup]="commentAddForm" (ngSubmit)="onSubmit()">
   <input class="p-2.5 w-1/2 outline-0 border-b-2 border-b-slate-500 text-gray-200" formControlName="content" type="text" placeholder="Napisz komentarz...">

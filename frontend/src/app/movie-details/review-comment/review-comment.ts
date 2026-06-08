@@ -8,7 +8,7 @@ import { NgOptimizedImage } from '@angular/common';
   styleUrl: './review-comment.css',
 })
 export class ReviewComment {
-  //TODO: awatary
+  avatarUrl = input("");
   username = input("Nazwa użytkownika")
   content = input("Zawartość komentarza")
 }

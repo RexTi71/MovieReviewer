@@ -1,7 +1,7 @@
 <div class="w-full h-full flex items-center justify-center box-border text-white">
   <div class="flex w-full max-w-6xl">
     <div class="w-1/2 flex flex-col items-center justify-center">
-      <img class="m-2.5" [src]="avatarUrl()" height="160" width="160" alt="avatar">
+      <img class="rounded-[50%] aspect-square  m-2.5" [src]="avatarUrl()" height="160" width="160" alt="avatar">
       <label for="avatar">Wgraj zdjęcie profilowe</label>
       <input type="file" (change)="onFileUpload($event)" name="avatar" accept="image/png, image/jpeg" class="mt-2.5 bg-ink-black p-2.5 rounded-2xl text-center w-80 hover:bg-fresh-sky active:scale-95 transition-all cursor-pointer shadow-md shadow-black">
     </div>

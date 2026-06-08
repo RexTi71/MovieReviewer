@@ -1,6 +1,7 @@
 package com.dominik.backend.controllers;
 
 import com.dominik.backend.dto.CommentDto;
+import com.dominik.backend.dto.CommentResponseDto;
 import com.dominik.backend.model.Comment;
 import com.dominik.backend.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +20,10 @@ public class CommentController {
     private String buildResponse(String message){
         return "\"" + message + "\"";
     }
-    @GetMapping("/comment/{accountId}")
-    public ResponseEntity<List<Comment>> getCommentsForReview(@PathVariable Long accountId){
-        return ResponseEntity.ok(commentService.getCommentsForReview(accountId));
+    @GetMapping("/comment")
+    public ResponseEntity<List<CommentResponseDto>> getCommentsForReview(@RequestParam Long accountId,
+                                                                         @RequestParam Long movieId){
+        return ResponseEntity.ok(commentService.getCommentsForReview(accountId, movieId));
     }
     @PostMapping("/comment")
     public ResponseEntity<String> addComent(@RequestBody CommentDto commentDto){

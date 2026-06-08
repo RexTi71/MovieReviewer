@@ -39,7 +39,7 @@
   </div>
   <div class="p-2.5 pt-5 flex flex-col gap-y-5 border-t-2 border-t-gray-400">
     @for (review of reviews(); track review.title) {
-      <app-movie-review [imageUrl]="`http://localhost:8080/api/avatar/${review.userId}`"   [title]="review.title" [rating]="review.rating"  [content]="review.content" [username]="review.username"/>
+      <app-movie-review [review]="review" [imageUrl]="`http://localhost:8080/api/avatar/${review.userId}`"   [title]="review.title" [rating]="review.rating"  [content]="review.content" [username]="review.username"/>
     } @empty {
       <p class="text-white text-center text-xl pt-15"> Brak recenzji dla tego filmu...</p>
     }
