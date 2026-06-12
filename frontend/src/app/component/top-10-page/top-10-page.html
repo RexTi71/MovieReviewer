@@ -1,5 +1,11 @@
 @for (movie of movies(); track movie.id){
-  <app-top-10-list [id]="movie.id" [position]=$index+1 [title]="movie.title" [description]="movie.description" [rating]="movie.rating" [imageUrl]="`http://localhost:8080/api/poster/${movie.id}`"  ></app-top-10-list>
+  @if(movie.rating != null){
+    <app-top-10-list [id]="movie.id" [position]=$index+1 [title]="movie.title" [description]="movie.description" [rating]="movie.rating" [imageUrl]="`http://localhost:8080/api/poster/${movie.id}`"  ></app-top-10-list>
+  } @else if (movie.rating == null && $last){
+    <div class="text-white text-2xl mt-10">
+      Brak ocen dla kolejnych filmów!
+    </div>
+  }
 } @empty {
   <div class="text-white text-2xl mt-10">
     Trwa ładowanie filmów z serwera...
