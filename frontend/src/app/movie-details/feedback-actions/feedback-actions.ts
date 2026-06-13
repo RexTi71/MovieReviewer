@@ -1,6 +1,6 @@
 import { Component, inject, input } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Report } from '../../interface/report';
+import { ReportService } from '../../service/report-service';
 
 @Component({
   selector: 'app-feedback-actions',
@@ -9,28 +9,25 @@ import { Report } from '../../interface/report';
   styleUrl: './feedback-actions.css',
 })
 export class FeedbackActions {
-  private http = inject(HttpClient);
+  private reportService = inject(ReportService);
 
-  id= input('1');
+  id = input('1');
   username = input('Nazwa użytkownika');
   content = input('Zawartość komentarza');
   date = input('2000-10-10');
 
-  replyToUser() {}
+
+
+  replyToUser(){
+    this.reportService.setReply(this.id(), this.username());
+  };
   reportComment() {
     const report: Report = {
-      username:this.username(),
+      username: this.username(),
       commentId: this.id(),
       content: this.content(),
-      date: this.date()
+      date: this.date(),
     };
-    this.http.post('http://localhost:8080/api/v1/report', report).subscribe({
-      next: res =>{
-        console.log(res);
-      },
-      error: err => {
-        console.log(err);
-      }
-    });
+    this.reportService.addReportForComment(report);
   }
 }

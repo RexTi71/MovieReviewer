@@ -13,4 +13,5 @@ public class CommentResponseDto {
     private String username;
     private String content;
     private LocalDate date;
+    private Long parentId;
 }

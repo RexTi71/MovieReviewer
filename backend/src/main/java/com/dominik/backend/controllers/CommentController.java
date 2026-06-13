@@ -28,9 +28,7 @@ public class CommentController {
     @PostMapping("/comment")
     public ResponseEntity<String> addComent(@RequestBody CommentDto commentDto){
         try {
-            String response = buildResponse(commentService.addComent(commentDto.getContent(),
-                                                                    commentDto.getToken(),
-                                                                    commentDto.getMovieId()));
+            String response = buildResponse(commentService.addComent(commentDto));
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
         }catch (IllegalArgumentException ex){
             return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(buildResponse(ex.getMessage()));

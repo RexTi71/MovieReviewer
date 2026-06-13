@@ -27,13 +27,17 @@
 </div>
 
 <div class="pt-2.5 flex flex-col gap-y-2.5">
-  @for (comment of comments(); track comment.username){
-    <app-review-comment [id]="comment.id" [avatarUrl]="`http://localhost:8080/api/avatar/${comment.userId}`" [date]="comment.date" [username]="comment.username" [content]="comment.content"/>
+  @for (comment of comments(); track comment.id){
+    <app-review-comment [id]="comment.id"
+                        [avatarUrl]="`http://localhost:8080/api/avatar/${comment.userId}`"
+                        [date]="comment.date"
+                        [username]="comment.username"
+                        [content]="comment.content"/>
   }
 </div>
 @if(token){
   <form class="w-full pt-2.5 pr-15 flex gap-x-4 justify-end" [formGroup]="commentAddForm" (ngSubmit)="onSubmit()">
-    <input class="p-2.5 w-1/2 outline-0 border-b-2 border-b-slate-500 text-gray-200" formControlName="content" type="text" placeholder="Napisz komentarz...">
+    <input class="p-2.5 w-1/2 outline-0 border-b-2 border-b-slate-500 text-gray-200" formControlName="content" type="text" [value]="'@' + replyUsername() + ' ' " placeholder="Napisz komentarz...">
     <input class="text-white rounded-3xl hover:bg-fresh-sky active:scale-95 transition-all cursor-pointer p-2.5" type="submit" value="Opublikuj">
   </form>
 }

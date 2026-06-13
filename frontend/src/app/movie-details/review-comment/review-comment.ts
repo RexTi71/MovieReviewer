@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { FeedbackActions } from '../feedback-actions/feedback-actions';
 
@@ -10,7 +10,7 @@ import { FeedbackActions } from '../feedback-actions/feedback-actions';
 })
 export class ReviewComment {
   token = sessionStorage.getItem('token');
-  id= input('1');
+  id = input('1');
   avatarUrl = input('');
   username = input('Nazwa użytkownika');
   content = input('Zawartość komentarza');

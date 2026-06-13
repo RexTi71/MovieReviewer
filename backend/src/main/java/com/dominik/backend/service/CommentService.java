@@ -1,5 +1,6 @@
 package com.dominik.backend.service;
 
+import com.dominik.backend.dto.CommentDto;
 import com.dominik.backend.dto.CommentResponseDto;
 import com.dominik.backend.model.Account;
 import com.dominik.backend.model.Comment;
@@ -32,6 +33,9 @@ public class CommentService {
         lightWeightComment.setUsername(comment.getAccount().getUsername());
         lightWeightComment.setContent(comment.getContent());
         lightWeightComment.setDate(comment.getDate());
+        if(comment.getReplyTo() != null){
+            lightWeightComment.setParentId(comment.getReplyTo().getId());
+        }
 
         lightWeightComments.add(lightWeightComment);
         });
@@ -41,21 +45,22 @@ public class CommentService {
     public Comment getCommentById(Long id){
         return commentRepository.findById(id).orElse(null);
     }
-    public String addComent(String content,
-                            String token,
-                            Long movieId)throws IllegalArgumentException{
+    public String addComent(CommentDto commentDto)throws IllegalArgumentException{
         Comment comment = new Comment();
 
         try{
-            Account account = accountService.getAccountFromToken(token);
+            Account account = accountService.getAccountFromToken(commentDto.getToken());
             comment.setAccount(account);
-            comment.setReview(reviewService.findByAccountIdAndMovieId(account.getId(),movieId));
         }catch (RuntimeException ex){
             throw new IllegalArgumentException("Niepoprawny token");
         }
-
+        if(commentDto.getParentId() != null){
+            Comment parentComment = commentRepository.findById(commentDto.getParentId()).orElse(null);
+            comment.setReplyTo(parentComment);
+        }
+        comment.setReview(reviewService.findByAccountIdAndMovieId(commentDto.getReviewAccountId(),commentDto.getMovieId()));
         comment.setDate(LocalDate.now());
-        comment.setContent(content);
+        comment.setContent(commentDto.getContent());
         commentRepository.save(comment);
 
         if(commentRepository.findById(comment.getId()).isEmpty()){

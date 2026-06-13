@@ -1,14 +1,15 @@
 import { Component, inject, input, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {CommentAdd} from '../../interface/comment-add';
 import { Review } from '../../interface/review';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { CommentResponse } from '../../interface/comment-response';
 import { ReviewComment } from '../review-comment/review-comment';
-import { filter, switchMap } from 'rxjs';
+import { filter, switchMap, take } from 'rxjs';
 import { FeedbackActions } from '../feedback-actions/feedback-actions';
+import { ReportService } from '../../service/report-service';
 
 
 @Component({
@@ -20,6 +21,8 @@ import { FeedbackActions } from '../feedback-actions/feedback-actions';
 export class MovieReview {
   private http = inject(HttpClient);
   private activeRoute = inject(ActivatedRoute);
+  private reportSerivce = inject(ReportService);
+
   token = sessionStorage.getItem('token');
 
   review = input<Review>();
@@ -28,6 +31,7 @@ export class MovieReview {
   username = input('Nazwa użytkownika');
   content = input('zawartość recenzji');
   imageUrl = input('def-avatar.png');
+  replyUsername = this.reportSerivce.replyUsername;
 
   commentAddForm = new FormGroup({
     content: new FormControl(''),
@@ -47,18 +51,25 @@ export class MovieReview {
   );
 
   onSubmit() {
-    const comment: CommentAdd = {
-      content: this.commentAddForm.get('content')?.value,
-      token: this.token,
-      movieId: this.activeRoute.snapshot.paramMap.get('id'),
-    };
-    this.http.post(`http://localhost:8080/api/v1/comment`, comment).subscribe({
-      next: (res) => {
-        console.log(res);
-      },
-      error: (err) => {
-        console.log(err.error);
-      },
+    this.review$.pipe(take(1)).subscribe(review => {
+        if (!review) return;
+      const comment: CommentAdd = {
+        content: this.commentAddForm.get('content')?.value,
+        token: this.token,
+        movieId: this.activeRoute.snapshot.paramMap.get('id'),
+        reviewAccountId: review.userId,
+        parentId: this.reportSerivce.replyCommentId(),
+
+    }
+      this.http.post(`http://localhost:8080/api/v1/comment`, comment).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.reportSerivce.clearReply();
+        },
+        error: (err) => {
+          console.log(err.error);
+        },
+      });
     });
   }
 }

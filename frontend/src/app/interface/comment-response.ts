@@ -4,4 +4,5 @@ export interface CommentResponse {
   username:string;
   content:string;
   date:string;
+  parentId:string;
 }

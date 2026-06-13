@@ -9,4 +9,6 @@ public class CommentDto {
     private String content;
     private String token;
     private Long movieId;
+    private Long reviewAccountId;
+    private Long parentId;
 }
