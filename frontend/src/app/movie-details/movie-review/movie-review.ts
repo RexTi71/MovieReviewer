@@ -1,13 +1,13 @@
 import { Component, inject, input, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import {CommentAdd} from '../../interface/comment-add';
 import { Review } from '../../interface/review';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { CommentResponse } from '../../interface/comment-response';
 import { ReviewComment } from '../review-comment/review-comment';
-import { filter, switchMap, take } from 'rxjs';
+import { filter, map, switchMap, take } from 'rxjs';
 import { FeedbackActions } from '../feedback-actions/feedback-actions';
 import { ReportService } from '../../service/report-service';
 
@@ -40,27 +40,33 @@ export class MovieReview {
 
   comments = toSignal(
     this.review$.pipe(
-      filter((rev): rev is Review => !!rev && !!rev.userId && !!rev.movieId),
-      switchMap((rev) =>
-        this.http.get<CommentResponse[]>(
-          `http://localhost:8080/api/v1/comment?accountId=${rev.userId}&movieId=${rev.movieId}`,
-        ),
-      ),
+      filter((rev): rev is Review => !!rev?.userId && !!rev?.movieId),
+      switchMap(({ userId, movieId }) => {
+        const params = new HttpParams().set('accountId', userId!).set('movieId', movieId!);
+        return this.http.get<CommentResponse[]>(`http://localhost:8080/api/v1/comment`, { params });
+      }),
+      map((allComments) => {
+        const roots = allComments.filter((c) => !c.parentId);
+        const replies = allComments.filter((c) => c.parentId);
+        return roots.flatMap((root) => [
+          root,
+          ...replies.filter((reply) => reply.parentId === root.id),
+        ]);
+      }),
     ),
     { initialValue: [] },
   );
 
   onSubmit() {
-    this.review$.pipe(take(1)).subscribe(review => {
-        if (!review) return;
+    this.review$.pipe(take(1)).subscribe((review) => {
+      if (!review) return;
       const comment: CommentAdd = {
         content: this.commentAddForm.get('content')?.value,
         token: this.token,
         movieId: this.activeRoute.snapshot.paramMap.get('id'),
         reviewAccountId: review.userId,
         parentId: this.reportSerivce.replyCommentId(),
-
-    }
+      };
       this.http.post(`http://localhost:8080/api/v1/comment`, comment).subscribe({
         next: (res) => {
           console.log(res);

@@ -15,6 +15,8 @@ export class FeedbackActions {
   username = input('Nazwa użytkownika');
   content = input('Zawartość komentarza');
   date = input('2000-10-10');
+  parentId = input('1');
+  isReply = input(false);
 
 
 
@@ -27,6 +29,7 @@ export class FeedbackActions {
       commentId: this.id(),
       content: this.content(),
       date: this.date(),
+      parentId:this.parentId(),
     };
     this.reportService.addReportForComment(report);
   }

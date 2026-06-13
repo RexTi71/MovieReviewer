@@ -12,8 +12,9 @@ export class ReviewComment {
   token = sessionStorage.getItem('token');
   id = input('1');
   avatarUrl = input('');
+  isReply = input(false);
   username = input('Nazwa użytkownika');
   content = input('Zawartość komentarza');
   date = input('2000-10-10');
-
+  parentId = input('1');
 }

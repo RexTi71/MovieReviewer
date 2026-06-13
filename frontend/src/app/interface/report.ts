@@ -3,4 +3,5 @@ export interface Report {
   commentId:string;
   content:string;
   date:string;
+  parentId:string;
 }

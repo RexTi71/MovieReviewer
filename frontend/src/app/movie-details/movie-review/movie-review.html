@@ -30,6 +30,8 @@
   @for (comment of comments(); track comment.id){
     <app-review-comment [id]="comment.id"
                         [avatarUrl]="`http://localhost:8080/api/avatar/${comment.userId}`"
+                        [isReply]="!!comment.parentId"
+                        [parentId]="comment.parentId"
                         [date]="comment.date"
                         [username]="comment.username"
                         [content]="comment.content"/>

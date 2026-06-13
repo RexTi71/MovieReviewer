@@ -1,4 +1,4 @@
-<div class="bg-deep-space-blue ml-auto p-2.5 flex min-w-auto gap-10 h-fit w-4/5 border-2 shadow-sm shadow-ink-black border-slate-500 rounded-xl">
+<div [class.ml-32]="isReply()" class="bg-deep-space-blue ml-16 p-2.5 flex min-w-auto gap-10 h-fit w-auto border-2 shadow-sm shadow-ink-black border-slate-500 rounded-xl">
   <div class="flex flex-col items-center ">
     <img class="rounded-[50%] aspect-square" [src]="avatarUrl()" width="50" height="50" alt="awatar użytkownika">
     <h1 class="text-gray-400 wrap-break-word text-center">{{username()}}</h1>
@@ -8,7 +8,7 @@
     <div class="flex flex-col gap-y-5">
       <p class="text-sm text-gray-300 w-1/7">{{date() | date: 'dd.MM.yyyy'}}</p>
       @if (token){
-        <app-feedback-actions [id]="id()" [date]="date()" [username]="username()" [content]="content()" />
+        <app-feedback-actions [id]="id()" [isReply]="isReply()" [parentId]="parentId()" [date]="date()" [username]="username()" [content]="content()" />
       }
     </div>
   </div>
