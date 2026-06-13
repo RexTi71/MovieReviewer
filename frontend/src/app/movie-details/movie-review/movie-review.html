@@ -1,29 +1,39 @@
-<div class="bg-deep-space-blue p-2.5 flex gap-10 border-2 shadow-sm shadow-ink-black border-slate-400 rounded-3xl w-full">
-  <div class="flex flex-col w-1/6 items-center">
-    <img class="rounded-[50%] aspect-square" [src]="imageUrl()"  width="125" height="125" alt="awatar użytkownika">
-    <h1 class="text-gray-400 text-center">{{username()}}</h1>
+<div class="bg-deep-space-blue p-4 grid grid-cols-[max-content_1fr] gap-x-10 border-2 shadow-sm shadow-ink-black border-slate-400 rounded-3xl w-full">
+
+  <div class="flex flex-col items-center">
+    <img class="rounded-[50%] aspect-square object-cover" [src]="imageUrl()" width="125" height="125" alt="awatar użytkownika">
+    <h1 class="text-gray-400 text-center mt-2">{{username()}}</h1>
   </div>
-  <div class="flex flex-col w-5/6">
-    <div class="flex items-center gap-3 w-full min-w-0 mb-10">
-      <h1 class="text-white text-3xl pr-10 wrap-break-word w-3/4 leading-10">{{title()}}</h1>
-      <svg class="h-8 w-8 shrink-0 w-1/4" fill="#ffffff" viewBox="0 0 36 36"  preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <div class="grid grid-cols-[1fr_max-content] grid-rows-[auto_1fr] gap-x-4">
+
+    <h1 class="text-white text-3xl wrap-break-word leading-10 self-start pr-4">{{title()}}</h1>
+
+    <div class="flex gap-x-3 items-center self-start justify-end">
+      <svg class="h-8 w-8 shrink-0" fill="#ffffff" viewBox="0 0 36 36" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
         <title>recenzja</title>
         <path class="clr-i-solid clr-i-solid-path-1" d="M34,16.78a2.22,2.22,0,0,0-1.29-4l-9-.34a.23.23,0,0,1-.2-.15L20.4,3.89a2.22,2.22,0,0,0-4.17,0l-3.1,8.43a.23.23,0,0,1-.2.15l-9,.34a2.22,2.22,0,0,0-1.29,4l7.06,5.55a.23.23,0,0,1,.08.24L7.35,31.21a2.22,2.22,0,0,0,3.38,2.45l7.46-5a.22.22,0,0,1,.25,0l7.46,5a2.2,2.2,0,0,0,2.55,0,2.2,2.2,0,0,0,.83-2.4l-2.45-8.64a.22.22,0,0,1,.08-.24Z"></path>
       </svg>
-      <p class="text-gray-300 text-3xl whitespace-normal w-1/4 leading-0">{{rating()}}/5</p>
+      <p class="text-gray-300 text-3xl">{{rating()}}/5</p>
     </div>
-    <p class="text-gray-300 break-all">
+
+    <p class="text-gray-300 wrap-break-word self-end mt-10 pr-4">
       {{content()}}
     </p>
+
+
+
   </div>
 </div>
-<div class="pt-2.5 flex flex-col gap-y-2.5">
 
-@for (comment of comments(); track comment.username){
-  <app-review-comment [avatarUrl]="`http://localhost:8080/api/avatar/${comment.userId}`" [username]="comment.username" [content]="comment.content"/>
-}
+<div class="pt-2.5 flex flex-col gap-y-2.5">
+  @for (comment of comments(); track comment.username){
+    <app-review-comment [id]="comment.id" [avatarUrl]="`http://localhost:8080/api/avatar/${comment.userId}`" [date]="comment.date" [username]="comment.username" [content]="comment.content"/>
+  }
 </div>
-<form class="w-full pt-2.5 pr-15 flex gap-x-4 justify-end" [formGroup]="commentAddForm" (ngSubmit)="onSubmit()">
-  <input class="p-2.5 w-1/2 outline-0 border-b-2 border-b-slate-500 text-gray-200" formControlName="content" type="text" placeholder="Napisz komentarz...">
-  <input class="text-white rounded-3xl hover:bg-fresh-sky active:scale-95 transition-all cursor-pointer p-2.5" type="submit" value="Opublikuj">
-</form>
+@if(token){
+  <form class="w-full pt-2.5 pr-15 flex gap-x-4 justify-end" [formGroup]="commentAddForm" (ngSubmit)="onSubmit()">
+    <input class="p-2.5 w-1/2 outline-0 border-b-2 border-b-slate-500 text-gray-200" formControlName="content" type="text" placeholder="Napisz komentarz...">
+    <input class="text-white rounded-3xl hover:bg-fresh-sky active:scale-95 transition-all cursor-pointer p-2.5" type="submit" value="Opublikuj">
+  </form>
+}

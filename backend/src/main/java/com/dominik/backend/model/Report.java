@@ -7,7 +7,6 @@ import lombok.Data;
 @Entity
 @Data
 @IdClass(ReportId.class)
-//no
 public class Report {
     @Id
     @ManyToOne
@@ -16,5 +15,4 @@ public class Report {
     @ManyToOne
     private Comment comment;
 
-    private String reason;
 }

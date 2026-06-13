@@ -40,8 +40,6 @@ public class ReviewService
     }
     public void addReview(ReviewDto reviewDto){
         //Mapowanie DTO do obiektu Review
-        //TODO: Sprawdz token przed oddaniem recenzji
-        //reviewDto.getToken()
         Review newReview = new Review();
         newReview.setTitle(reviewDto.getTitle());
         newReview.setContent(reviewDto.getContent());

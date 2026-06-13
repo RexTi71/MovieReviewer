@@ -38,6 +38,9 @@ public class CommentService {
         return lightWeightComments;
     }
 
+    public Comment getCommentById(Long id){
+        return commentRepository.findById(id).orElse(null);
+    }
     public String addComent(String content,
                             String token,
                             Long movieId)throws IllegalArgumentException{

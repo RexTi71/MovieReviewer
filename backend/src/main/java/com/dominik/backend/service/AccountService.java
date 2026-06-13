@@ -114,6 +114,9 @@ public class AccountService {
 
         return  getSessionFromToken(token).getAccount();
     }
+    public Account getAccountFromUsername(String username){
+        return accountRepository.findByUsername(username);
+    }
 
     public ResponseEntity<String> logout(String token){
         sessionRepository.delete(getSessionFromToken(token));

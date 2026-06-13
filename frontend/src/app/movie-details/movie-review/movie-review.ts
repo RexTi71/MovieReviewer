@@ -8,18 +8,19 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { CommentResponse } from '../../interface/comment-response';
 import { ReviewComment } from '../review-comment/review-comment';
 import { filter, switchMap } from 'rxjs';
+import { FeedbackActions } from '../feedback-actions/feedback-actions';
 
 
 @Component({
   selector: 'app-movie-review',
-  imports: [ReactiveFormsModule, ReviewComment],
+  imports: [ReactiveFormsModule, ReviewComment, FeedbackActions],
   templateUrl: './movie-review.html',
   styleUrl: './movie-review.css',
 })
 export class MovieReview {
   private http = inject(HttpClient);
   private activeRoute = inject(ActivatedRoute);
-  private token = sessionStorage.getItem('token');
+  token = sessionStorage.getItem('token');
 
   review = input<Review>();
   title = input('Tytuł');
