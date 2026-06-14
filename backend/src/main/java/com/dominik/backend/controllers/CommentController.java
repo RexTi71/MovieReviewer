@@ -2,7 +2,6 @@ package com.dominik.backend.controllers;
 
 import com.dominik.backend.dto.CommentDto;
 import com.dominik.backend.dto.CommentResponseDto;
-import com.dominik.backend.model.Comment;
 import com.dominik.backend.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -26,7 +25,7 @@ public class CommentController {
         return ResponseEntity.ok(commentService.getCommentsForReview(accountId, movieId));
     }
     @PostMapping("/comment")
-    public ResponseEntity<String> addComent(@RequestBody CommentDto commentDto){
+    public ResponseEntity<String> addComment(@RequestBody CommentDto commentDto){
         try {
             String response = buildResponse(commentService.addComent(commentDto));
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
