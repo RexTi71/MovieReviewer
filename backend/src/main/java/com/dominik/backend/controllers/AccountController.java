@@ -17,8 +17,6 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/auth")
 public class AccountController {
-    @Autowired
-    JWT jwt;
     private final AccountService accountService;
 
     FileStorage avatarStorage;
@@ -27,7 +25,7 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @PostMapping("/register") //пока без верификации email
+    @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody AccountDto accountDto){
         return accountService.registerAccount(accountDto.getUsername(), accountDto.getEmail(), accountDto.getPassword());
     }
