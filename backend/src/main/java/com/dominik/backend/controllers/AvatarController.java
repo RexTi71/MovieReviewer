@@ -16,9 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/api/avatar")
 public class AvatarController {
-    @Autowired
-    JWT jwt;
-
     FileStorage avatarStorage = new FileStorage("avatars/");
 
     @Autowired
@@ -61,8 +58,4 @@ public class AvatarController {
 //                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(file);
     }
-
-
-
-
 }
