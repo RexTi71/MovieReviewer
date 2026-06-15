@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { toSignal } from '@angular/core/rxjs-interop';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConsoleLogger } from '@angular/compiler-cli';
 type Account = {
   username: string;
 }
@@ -40,7 +41,7 @@ export class ReviewAdd {
     const review: Review = {
       token: sessionStorage.getItem('token'),
       movieId: this.id,
-      rating: this.addReviewForm.value.rating,
+      rating: this.dajGwiazdki().toString(),
       title: this.addReviewForm.value.title,
       content: this.addReviewForm.value.content,
     };
@@ -50,5 +51,16 @@ export class ReviewAdd {
         this.route.navigate(['/film/', this.id]);
       });
     });
+  }
+
+  tablicaGwiazdek = Array(5).fill(0)
+
+  dajGwiazdki(){
+    let g = this.tablicaGwiazdek.lastIndexOf(1)+1;
+    console.log(g);
+    return g;
+  }
+  ustawGwiazdki(num:number){
+    this.tablicaGwiazdek = this.tablicaGwiazdek.map((t,i)=>{if(i<=num)return 1;return 0;});
   }
 }
