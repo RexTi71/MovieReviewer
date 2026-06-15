@@ -56,6 +56,6 @@ export class ProfilePage {
       .subscribe((res) => {
         console.log(res);
       });
-    this.route.navigate(['/']);
+    this.route.navigate(['/'], {state: {loggedOut: true}});
   }
 }

@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { Movie } from '../../interface/movie';
 import { PageSelect } from '../page-select/page-select';
+import { SnackBarService } from '../../notification.service';
 
 @Component({
   selector: 'app-home-page',
@@ -18,6 +19,27 @@ import { PageSelect } from '../page-select/page-select';
 export class HomePage implements OnInit {
   activeRoute = inject(ActivatedRoute);
   private http = inject(HttpClient);
+  private router = inject(Router);
+  private popup = inject(SnackBarService);
+
+  constructor() {
+    let navigation = this.router.currentNavigation();
+    let stateLGIN = navigation?.extras.state as { loggedIn: boolean };
+    let stateLGOUT = navigation?.extras.state as {loggedOut: boolean};
+
+    if(stateLGIN?.loggedIn){
+      this.popup.openSnackBar('Pomyślnie zalogowano!');
+    }
+    if(stateLGOUT?.loggedOut){
+      this.popup.openSnackBar('Pomyślnie wylogowano!');
+    }
+
+    //potrzebne żeby przy odświeżaniu/wracaniu na tą samą stronę nie wyświetlał się znowu popup
+    let currentState = { ...window.history.state };
+    delete currentState.loggedIn;
+    delete currentState.loggedOut;
+    window.history.replaceState(currentState, '');
+  }
 
   moviesAmount = signal<number[]>([]);
 
@@ -26,7 +48,6 @@ export class HomePage implements OnInit {
   movies = toSignal(
     this.activeRoute.queryParamMap.pipe(
       switchMap((queryParams) => {
-
         const page = queryParams.get('page') ?? '0';
 
         return this.activeRoute.paramMap.pipe(
@@ -56,6 +77,5 @@ export class HomePage implements OnInit {
         this.moviesAmount.set(Array.from({ length: amount }, (_, i) => i + 1));
       });
   }
-
   protected readonly String = String;
 }

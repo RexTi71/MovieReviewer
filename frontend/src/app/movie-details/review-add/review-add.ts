@@ -47,7 +47,7 @@ export class ReviewAdd {
     this.http.post('http://localhost:8080/api/v1/review', review).subscribe((res) => {
       console.log(res);
       this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-        this.route.navigate(['/film/', this.id]);
+        this.route.navigate(['/film/', this.id], { state: { addedReview: true }});
       });
     });
   }

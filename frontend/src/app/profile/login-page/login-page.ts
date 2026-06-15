@@ -29,7 +29,7 @@ export class LoginPage {
         next: (res) =>{
           this.isLoginBad.set(false);
           this.tokenSave(res as string);
-          this.route.navigate(['/']);
+          this.route.navigate(['/'], {state: {loggedIn: true}});
         },
         error: (err) =>{
           this.isLoginBad.set( true);
