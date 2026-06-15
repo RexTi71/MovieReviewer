@@ -3,7 +3,6 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { toSignal } from '@angular/core/rxjs-interop';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConsoleLogger } from '@angular/compiler-cli';
 type Account = {
   username: string;
 }
