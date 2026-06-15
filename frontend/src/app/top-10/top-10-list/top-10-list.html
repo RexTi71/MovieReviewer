@@ -1,4 +1,9 @@
-<div class="border-2 rounded-3xl border-amber-400 bg-deep-space-blue shadow-lg shadow-black/50 text-white duration-200 transition-all scale-95 hover:scale-100 cursor-pointer overflow-hidden relative group" [routerLink]="['/film',id()]">
+<div class="border-2 rounded-3xl bg-deep-space-blue shadow-lg shadow-black/50 text-white duration-200 transition-all scale-95 hover:scale-100 cursor-pointer overflow-hidden relative group " [routerLink]="['/film',id()]" [ngClass]="{
+      'border-amber-300': position() == 1,
+      'border-mist-400': position() == 2,
+      'border-yellow-800': position() == 3,
+      'border-slate-400': position() > 3,
+      }">
   <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-linear-to-l from-deep-space-blue to-ink-black hover:animate-gradient z-0"></div>
   <div class="flex m-4 p-4 relative">
     <div class="flex flex-none flex-col items-center justify-center w-36 mr-10 space-y-2">
