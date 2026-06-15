@@ -1,7 +1,9 @@
 package com.dominik.backend.controllers;
 
 import com.dominik.backend.model.Movie;
+import com.dominik.backend.repository.CommentRepository;
 import com.dominik.backend.repository.MovieRepository;
+import com.dominik.backend.repository.ReviewRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,6 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import static org.hamcrest.Matchers.hasSize;
@@ -30,11 +31,19 @@ class HomeControllerTest {
     @Autowired
     private MovieRepository movieRepository;
 
+    @Autowired
+    private ReviewRepository reviewRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
+
     private Movie movie1;
     private Movie movie2;
 
     @BeforeEach
     void setUp() {
+        commentRepository.deleteAll();
+        reviewRepository.deleteAll();
         movieRepository.deleteAll();
 
         movie1 = new Movie();
