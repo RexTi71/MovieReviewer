@@ -288,7 +288,7 @@ import {
   ɵɵnamespaceSVG,
   ɵɵresetView,
   ɵɵrestoreView
-} from "./chunk-LA7SL2HP.js";
+} from "./chunk-BQ2YPHMC.js";
 import {
   Subject,
   Subscription,
@@ -2267,7 +2267,7 @@ var TransferState = class _TransferState {
 };
 function retrieveTransferredState(doc, appId) {
   const script = doc.getElementById(appId + "-state");
-  if (script?.textContent) {
+  if (script?.tagName === "SCRIPT" && script.textContent) {
     try {
       return JSON.parse(script.textContent);
     } catch (e) {
@@ -3330,7 +3330,6 @@ var HTML_ATTRS = tagSet("abbr,accesskey,align,alt,autoplay,axis,bgcolor,border,c
 var ARIA_ATTRS = tagSet("aria-activedescendant,aria-atomic,aria-autocomplete,aria-busy,aria-checked,aria-colcount,aria-colindex,aria-colspan,aria-controls,aria-current,aria-describedby,aria-details,aria-disabled,aria-dropeffect,aria-errormessage,aria-expanded,aria-flowto,aria-grabbed,aria-haspopup,aria-hidden,aria-invalid,aria-keyshortcuts,aria-label,aria-labelledby,aria-level,aria-live,aria-modal,aria-multiline,aria-multiselectable,aria-orientation,aria-owns,aria-placeholder,aria-posinset,aria-pressed,aria-readonly,aria-relevant,aria-required,aria-roledescription,aria-rowcount,aria-rowindex,aria-rowspan,aria-selected,aria-setsize,aria-sort,aria-valuemax,aria-valuemin,aria-valuenow,aria-valuetext");
 var VALID_ATTRS = merge(URI_ATTRS, HTML_ATTRS, ARIA_ATTRS);
 var SKIP_TRAVERSING_CONTENT_IF_INVALID_ELEMENTS = tagSet("script,style,template");
-var SENSITIVE_ATTRS = merge(URI_ATTRS, tagSet("action,formaction,data,codebase"));
 var SanitizingHtmlSerializer = class {
   sanitizedSomething = false;
   buf = [];
@@ -3555,7 +3554,34 @@ var SecurityContext;
   SecurityContext2[SecurityContext2["SCRIPT"] = 3] = "SCRIPT";
   SecurityContext2[SecurityContext2["URL"] = 4] = "URL";
   SecurityContext2[SecurityContext2["RESOURCE_URL"] = 5] = "RESOURCE_URL";
+  SecurityContext2[SecurityContext2["ATTRIBUTE_NO_BINDING"] = 6] = "ATTRIBUTE_NO_BINDING";
 })(SecurityContext || (SecurityContext = {}));
+var _SECURITY_SCHEMA;
+var SVG_NAMESPACE2 = "svg";
+var MATH_ML_NAMESPACE2 = "math";
+function SECURITY_SCHEMA() {
+  if (!_SECURITY_SCHEMA) {
+    _SECURITY_SCHEMA = {};
+    registerContext(SecurityContext.HTML, void 0, [["iframe", ["srcdoc"]], ["*", ["innerHTML", "outerHTML"]]]);
+    registerContext(SecurityContext.STYLE, void 0, [["*", ["style"]]]);
+    registerContext(SecurityContext.URL, void 0, [["*", ["formAction"]], ["area", ["href"]], ["a", ["href", "xlink:href"]], ["form", ["action"]], ["img", ["src"]], ["video", ["src"]]]);
+    registerContext(SecurityContext.URL, MATH_ML_NAMESPACE2, [["annotation", ["href", "xlink:href"]], ["annotation-xml", ["href", "xlink:href"]], ["maction", ["href", "xlink:href"]], ["malignmark", ["href", "xlink:href"]], ["math", ["href", "xlink:href"]], ["mroot", ["href", "xlink:href"]], ["msqrt", ["href", "xlink:href"]], ["merror", ["href", "xlink:href"]], ["mfrac", ["href", "xlink:href"]], ["mglyph", ["href", "xlink:href"]], ["msub", ["href", "xlink:href"]], ["msup", ["href", "xlink:href"]], ["msubsup", ["href", "xlink:href"]], ["mmultiscripts", ["href", "xlink:href"]], ["mprescripts", ["href", "xlink:href"]], ["mi", ["href", "xlink:href"]], ["mn", ["href", "xlink:href"]], ["mo", ["href", "xlink:href"]], ["mpadded", ["href", "xlink:href"]], ["mphantom", ["href", "xlink:href"]], ["mrow", ["href", "xlink:href"]], ["ms", ["href", "xlink:href"]], ["mspace", ["href", "xlink:href"]], ["mstyle", ["href", "xlink:href"]], ["mtable", ["href", "xlink:href"]], ["mtd", ["href", "xlink:href"]], ["mtr", ["href", "xlink:href"]], ["mtext", ["href", "xlink:href"]], ["mover", ["href", "xlink:href"]], ["munder", ["href", "xlink:href"]], ["munderover", ["href", "xlink:href"]], ["semantics", ["href", "xlink:href"]], ["none", ["href", "xlink:href"]]]);
+    registerContext(SecurityContext.RESOURCE_URL, void 0, [["base", ["href"]], ["embed", ["src"]], ["frame", ["src"]], ["iframe", ["src"]], ["link", ["href"]], ["object", ["codebase", "data"]]]);
+    registerContext(SecurityContext.URL, SVG_NAMESPACE2, [["a", ["href", "xlink:href"]]]);
+    registerContext(SecurityContext.ATTRIBUTE_NO_BINDING, SVG_NAMESPACE2, [["animate", ["attributeName", "values", "to", "from"]], ["set", ["to", "attributeName"]], ["animateMotion", ["attributeName"]], ["animateTransform", ["attributeName"]]]);
+    registerContext(SecurityContext.ATTRIBUTE_NO_BINDING, void 0, [["unknown", ["attributeName", "values", "to", "from", "sandbox", "allow", "allowFullscreen", "referrerPolicy", "csp", "fetchPriority"]], ["iframe", ["sandbox", "allow", "allowFullscreen", "referrerPolicy", "csp", "fetchPriority"]]]);
+  }
+  return _SECURITY_SCHEMA;
+}
+function registerContext(ctx, namespace, specs) {
+  for (const [element, attributeNames] of specs) {
+    let tagName = namespace && element !== "*" && element !== "unknown" ? `:${namespace}:${element}` : element;
+    tagName = tagName.toLowerCase();
+    for (const attr of attributeNames) {
+      _SECURITY_SCHEMA[`${tagName}|${attr.toLowerCase()}`] = ctx;
+    }
+  }
+}
 function ɵɵsanitizeHtml(unsafeHtml) {
   const sanitizer = getSanitizer();
   if (sanitizer) {
@@ -3631,11 +3657,6 @@ var RESOURCE_MAP = {
   "media": {
     "src": true
   },
-  "script": {
-    "src": true,
-    "href": true,
-    "xlink:href": true
-  },
   "base": {
     "href": true
   },
@@ -3648,7 +3669,7 @@ var RESOURCE_MAP = {
   }
 };
 function getUrlSanitizer(tag, prop) {
-  const isResource = RESOURCE_MAP[tag]?.[prop] === true;
+  const isResource = RESOURCE_MAP[tag.toLowerCase()]?.[prop.toLowerCase()] === true;
   return isResource ? ɵɵsanitizeResourceUrl : ɵɵsanitizeUrl;
 }
 function ɵɵsanitizeUrlOrResourceUrl(unsafeUrl, tag, prop) {
@@ -3666,6 +3687,7 @@ function getSanitizer() {
   return lView && lView[ENVIRONMENT].sanitizer;
 }
 var SECURITY_SENSITIVE_ATTRIBUTE_NAMES = /* @__PURE__ */ new Set(["href", "xlink:href"]);
+var SVG_ANIMATION_ATTRIBUTE_NAME_CANDIDATES = ["attributeName", "attributename"];
 var SECURITY_SENSITIVE_ELEMENTS = {
   "iframe": {
     "sandbox": true,
@@ -3675,52 +3697,69 @@ var SECURITY_SENSITIVE_ELEMENTS = {
     "csp": true,
     "fetchpriority": true
   },
-  "animate": {
+  ":svg:animate": {
     "attributename": true,
     "to": SECURITY_SENSITIVE_ATTRIBUTE_NAMES,
     "values": SECURITY_SENSITIVE_ATTRIBUTE_NAMES,
     "from": SECURITY_SENSITIVE_ATTRIBUTE_NAMES
   },
-  "set": {
+  ":svg:set": {
     "attributename": true,
     "to": SECURITY_SENSITIVE_ATTRIBUTE_NAMES
   },
-  "animatemotion": {
+  ":svg:animatemotion": {
     "attributename": true
   },
-  "animatetransform": {
+  ":svg:animatetransform": {
     "attributename": true
   }
 };
 function ɵɵvalidateAttribute(value, tagName, attributeName) {
   const lowerCaseTagName = tagName.toLowerCase();
   const lowerCaseAttrName = attributeName.toLowerCase();
-  const validationConfig = SECURITY_SENSITIVE_ELEMENTS[lowerCaseTagName]?.[lowerCaseAttrName];
+  const index = getSelectedIndex();
+  const tNode = index === -1 ? null : getSelectedTNode();
+  if (tNode && tNode.type !== 2) {
+    return value;
+  }
+  const fullTagName = lowerCaseTagName[0] !== ":" && tNode?.namespace ? `:${tNode.namespace}:${lowerCaseTagName}` : lowerCaseTagName;
+  const validationConfig = SECURITY_SENSITIVE_ELEMENTS[fullTagName]?.[lowerCaseAttrName];
   if (!validationConfig) {
     return value;
   }
-  const tNode = getSelectedTNode();
-  if (tNode.type !== 2) {
-    return value;
-  }
   const lView = getLView();
-  if (lowerCaseTagName === "iframe") {
+  if (tNode && lowerCaseTagName === "iframe") {
     const element = getNativeByTNode(tNode, lView);
     enforceIframeSecurity(element);
   }
+  const displayTagName = tagName[0] === ":" ? tagName.split(":").pop() : tagName;
   if (typeof validationConfig !== "boolean") {
+    if (!tNode) {
+      const errorMessage2 = ngDevMode && `Angular has detected that the \`${attributeName}\` was applied as a binding to the <${tagName}> element. For security reasons, the \`${attributeName}\` can be set on the <${tagName}> element as a static attribute only. 
+To fix this, switch the \`${attributeName}\` binding to a static attribute in a template or in host bindings section.`;
+      throw new RuntimeError(-910, errorMessage2);
+    }
     const element = getNativeByTNode(tNode, lView);
-    const attributeNameValue = element.getAttribute("attributeName");
-    if (attributeNameValue && validationConfig.has(attributeNameValue.toLowerCase())) {
-      const errorMessage2 = ngDevMode && `Angular has detected that the \`${attributeName}\` was applied as a binding to the <${tagName}> element${getTemplateLocationDetails(lView)}. For security reasons, the \`${attributeName}\` can be set on the <${tagName}> element as a static attribute only when the "attributeName" is set to '${attributeNameValue}'. 
+    const attributeNameValue = getSecuritySensitiveSVGAnimationAttributeName(element, validationConfig);
+    if (attributeNameValue) {
+      const errorMessage2 = ngDevMode && `Angular has detected that the \`${attributeName}\` was applied as a binding to the <${displayTagName}> element${getTemplateLocationDetails(lView)}. For security reasons, the \`${attributeName}\` can be set on the <${displayTagName}> element as a static attribute only when the "attributeName" is set to '${attributeNameValue}'. 
 To fix this, switch the \`${attributeNameValue}\` binding to a static attribute in a template or in host bindings section.`;
       throw new RuntimeError(-910, errorMessage2);
     }
     return value;
   }
-  const errorMessage = ngDevMode && `Angular has detected that the \`${attributeName}\` was applied as a binding to the <${tagName}> element${getTemplateLocationDetails(lView)}. For security reasons, the \`${attributeName}\` can be set on the <${tagName}> element as a static attribute only. 
+  const errorMessage = ngDevMode && `Angular has detected that the \`${attributeName}\` was applied as a binding to the <${displayTagName}> element${tNode ? getTemplateLocationDetails(lView) : ""}. For security reasons, the \`${attributeName}\` can be set on the <${displayTagName}> element as a static attribute only. 
 To fix this, switch the \`${attributeName}\` binding to a static attribute in a template or in host bindings section.`;
   throw new RuntimeError(-910, errorMessage);
+}
+function getSecuritySensitiveSVGAnimationAttributeName(element, validationConfig) {
+  for (const attributeName of SVG_ANIMATION_ATTRIBUTE_NAME_CANDIDATES) {
+    const attributeNameValue = element.getAttribute(attributeName);
+    if (attributeNameValue !== null && validationConfig.has(attributeNameValue.toLowerCase())) {
+      return attributeNameValue;
+    }
+  }
+  return null;
 }
 var NG_REFLECT_ATTRS_FLAG_DEFAULT = false;
 var NG_REFLECT_ATTRS_FLAG = new InjectionToken(typeof ngDevMode === "undefined" || ngDevMode ? "NG_REFLECT_FLAG" : "", {
@@ -5339,6 +5378,9 @@ function locateHostElement(renderer, elementOrSelector, encapsulation, injector)
   const preserveHostContent = injector.get(PRESERVE_HOST_CONTENT, PRESERVE_HOST_CONTENT_DEFAULT);
   const preserveContent = preserveHostContent || encapsulation === ViewEncapsulation.ShadowDom || encapsulation === ViewEncapsulation.ExperimentalIsolatedShadowDom;
   const rootElement = renderer.selectRootElement(elementOrSelector, preserveContent);
+  if (rootElement.tagName.toLowerCase() === "script") {
+    throw new RuntimeError(905, ngDevMode && `"<script>" tag is not allowed as a component host element.`);
+  }
   applyRootElementTransform(rootElement);
   return rootElement;
 }
@@ -6801,6 +6843,7 @@ function createTNode(tView, tParent, type, index, value, attrs) {
     flags,
     providerIndexes: 0,
     value,
+    namespace: getNamespace(),
     attrs,
     mergedAttrs: null,
     localNames: null,
@@ -8985,7 +9028,7 @@ var ComponentFactory2 = class extends ComponentFactory$1 {
   }
 };
 function createRootTView(rootSelectorOrNode, componentDef, componentBindings, directives) {
-  const tAttributes = rootSelectorOrNode ? ["ng-version", "21.2.13"] : extractAttrsAndClassesFromSelector(componentDef.selectors[0]);
+  const tAttributes = rootSelectorOrNode ? ["ng-version", "21.2.17"] : extractAttrsAndClassesFromSelector(componentDef.selectors[0]);
   let creationBindings = null;
   let updateBindings = null;
   let varsToAllocate = 0;
@@ -10318,15 +10361,17 @@ function ɵɵInheritDefinitionFeature(definition) {
   let superType = getSuperType(definition.type);
   let shouldInheritFields = true;
   const inheritanceChain = [definition];
-  while (superType) {
+  while (superType && superType !== Function.prototype && superType !== Object.prototype) {
     let superDef = void 0;
+    const cmpDef = Object.hasOwn(superType, NG_COMP_DEF) ? superType[NG_COMP_DEF] : void 0;
+    const dirDef = Object.hasOwn(superType, NG_DIR_DEF) ? superType[NG_DIR_DEF] : void 0;
     if (isComponentDef(definition)) {
-      superDef = superType.ɵcmp || superType.ɵdir;
+      superDef = cmpDef ?? dirDef;
     } else {
-      if (superType.ɵcmp) {
+      if (cmpDef) {
         throw new RuntimeError(903, ngDevMode && `Directives cannot inherit Components. Directive ${stringifyForError(definition.type)} is attempting to extend component ${stringifyForError(superType)}`);
       }
-      superDef = superType.ɵdir;
+      superDef = dirDef;
     }
     if (superDef) {
       if (shouldInheritFields) {
@@ -14546,7 +14591,7 @@ function plural(val) {
   return 5;
 }
 var localeEn = ["en", [["a", "p"], ["AM", "PM"]], [["AM", "PM"]], [["S", "M", "T", "W", "T", "F", "S"], ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]], u, [["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]], u, [["B", "A"], ["BC", "AD"], ["Before Christ", "Anno Domini"]], 0, [6, 0], ["M/d/yy", "MMM d, y", "MMMM d, y", "EEEE, MMMM d, y"], ["h:mm a", "h:mm:ss a", "h:mm:ss a z", "h:mm:ss a zzzz"], ["{1}, {0}", u, u, u], [".", ",", ";", "%", "+", "-", "E", "×", "‰", "∞", "NaN", ":"], ["#,##0.###", "#,##0%", "¤#,##0.00", "#E0"], "USD", "$", "US Dollar", {}, "ltr", plural];
-var LOCALE_DATA = {};
+var LOCALE_DATA = /* @__PURE__ */ Object.create(null);
 function registerLocaleData(data, localeId, extraData) {
   if (typeof localeId !== "string") {
     extraData = localeId;
@@ -14589,7 +14634,7 @@ function getLocaleData(normalizedLocale) {
   return LOCALE_DATA[normalizedLocale];
 }
 function unregisterAllLocaleData() {
-  LOCALE_DATA = {};
+  LOCALE_DATA = /* @__PURE__ */ Object.create(null);
 }
 var LocaleDataIndex;
 (function(LocaleDataIndex2) {
@@ -14833,7 +14878,13 @@ function applyUpdateOpCodes(tView, lView, updateOpCodes, bindingsStartIndex, cha
                 if (typeof tNodeOrTagName === "string") {
                   setElementAttribute(lView[RENDERER], lView[nodeIndex], null, tNodeOrTagName, propName, value, sanitizeFn);
                 } else {
-                  setPropertyAndInputs(tNodeOrTagName, lView, propName, value, lView[RENDERER], sanitizeFn);
+                  const prevSelectedIndex = getSelectedIndex();
+                  setSelectedIndex(nodeIndex);
+                  try {
+                    setPropertyAndInputs(tNodeOrTagName, lView, propName, value, lView[RENDERER], sanitizeFn);
+                  } finally {
+                    setSelectedIndex(prevSelectedIndex);
+                  }
                 }
                 break;
               case 0:
@@ -15217,7 +15268,8 @@ function i18nAttributesFirstPass(tView, index, values) {
         if (ICU_REGEXP.test(message)) {
           throw new Error(`ICU expressions are not supported in attributes. Message: "${message}".`);
         }
-        generateBindingUpdateOpCodes(updateOpCodes, message, previousElementIndex, attrName, countBindings(updateOpCodes), i18nSanitizeAttribute(attrName));
+        const tagName = previousElement.namespace ? `:${previousElement.namespace}:${previousElement.value}` : previousElement.value;
+        generateBindingUpdateOpCodes(updateOpCodes, message, previousElementIndex, attrName, countBindings(updateOpCodes), i18nResolveSanitizer(attrName, tagName));
       }
     }
     tView.data[index] = updateOpCodes;
@@ -15447,20 +15499,24 @@ function walkIcuTree(ast, tView, tIcu, lView, sharedUpdateOpCodes, create, remov
             const attr = elAttrs.item(i);
             const lowerAttrName = attr.name.toLowerCase();
             const hasBinding2 = !!attr.value.match(BINDING_REGEXP);
+            const elementNS = element.namespaceURI;
+            const tagNameWithNamespace = elementNS === "http://www.w3.org/2000/svg" ? `:svg:${tagName}` : elementNS === "http://www.w3.org/1998/Math/MathML" ? `:math:${tagName}` : tagName;
             if (hasBinding2) {
               if (VALID_ATTRS.hasOwnProperty(lowerAttrName)) {
-                generateBindingUpdateOpCodes(update, attr.value, newIndex, attr.name, 0, i18nSanitizeAttribute(lowerAttrName));
+                generateBindingUpdateOpCodes(update, attr.value, newIndex, attr.name, 0, i18nResolveSanitizer(lowerAttrName, tagNameWithNamespace));
               } else {
                 ngDevMode && console.warn(`WARNING: ignoring unsafe attribute value ${lowerAttrName} on element ${tagName} (see ${XSS_SECURITY_URL})`);
               }
             } else if (VALID_ATTRS[lowerAttrName]) {
-              if (SENSITIVE_ATTRS[lowerAttrName]) {
+              let val = attr.value;
+              const sanitizer = i18nResolveSanitizer(lowerAttrName, tagNameWithNamespace);
+              if (sanitizer) {
                 if (typeof ngDevMode !== "undefined" && ngDevMode) {
                   console.warn(`WARNING: ignoring unsafe attribute ${lowerAttrName} on element ${tagName} (see ${XSS_SECURITY_URL})`);
                 }
                 addCreateAttribute(create, newIndex, attr.name, "unsafe:blocked");
               } else {
-                addCreateAttribute(create, newIndex, attr.name, attr.value);
+                addCreateAttribute(create, newIndex, attr.name, val);
               }
             } else {
               if (typeof ngDevMode !== "undefined" && ngDevMode) {
@@ -15532,16 +15588,46 @@ function addCreateNodeAndAppend(create, marker, text, appendToParentIdx, createA
 function addCreateAttribute(create, newIndex, attrName, attrValue) {
   create.push(newIndex << 1 | 1, attrName, attrValue);
 }
-var SECURITY_SENSITIVE_ATTRS = (() => new Set(Object.values(SECURITY_SENSITIVE_ELEMENTS).flatMap((attrs) => attrs ? Object.keys(attrs) : [])))();
-function i18nSanitizeAttribute(attrName) {
+function splitNsName(elementName, fatal = true) {
+  if (elementName[0] != ":") {
+    return [null, elementName];
+  }
+  const colonIndex = elementName.indexOf(":", 1);
+  if (colonIndex === -1) {
+    if (fatal) {
+      throw new Error(`Unsupported format "${elementName}" expecting ":namespace:name"`);
+    } else {
+      return [null, elementName];
+    }
+  }
+  return [elementName.slice(1, colonIndex), elementName.slice(colonIndex + 1)];
+}
+function normalizeTagName(tagName) {
+  const tagNameLower = tagName.toLowerCase();
+  const [ns, name] = splitNsName(tagNameLower, false);
+  return ns === SVG_NAMESPACE || ns === MATH_ML_NAMESPACE ? `:${ns}:${name}` : name;
+}
+function i18nResolveSanitizer(attrName, tagName) {
   const lowerAttrName = attrName.toLowerCase();
-  if (SENSITIVE_ATTRS[lowerAttrName]) {
-    return _sanitizeUrl;
+  const lowerTagName = tagName ? normalizeTagName(tagName) : "*";
+  const schema = SECURITY_SCHEMA();
+  const schemaContext = schema[`${lowerTagName}|${lowerAttrName}`] || schema[`*|${lowerAttrName}`] || SecurityContext.NONE;
+  switch (schemaContext) {
+    case SecurityContext.HTML:
+      return ɵɵsanitizeHtml;
+    case SecurityContext.STYLE:
+      return ɵɵsanitizeStyle;
+    case SecurityContext.SCRIPT:
+      return ɵɵsanitizeScript;
+    case SecurityContext.URL:
+      return _sanitizeUrl;
+    case SecurityContext.RESOURCE_URL:
+      return ɵɵsanitizeResourceUrl;
+    case SecurityContext.ATTRIBUTE_NO_BINDING:
+      return ɵɵvalidateAttribute;
+    default:
+      return null;
   }
-  if (SECURITY_SENSITIVE_ATTRS.has(lowerAttrName)) {
-    return ɵɵvalidateAttribute;
-  }
-  return null;
 }
 var ROOT_TEMPLATE_ID = 0;
 var PP_MULTI_VALUE_PLACEHOLDERS_REGEXP = /\[(�.+?�?)\]/;
@@ -22746,4 +22832,4 @@ export {
   RESPONSE_INIT,
   REQUEST_CONTEXT
 };
-//# sourceMappingURL=chunk-IMYMSJZA.js.map
+//# sourceMappingURL=chunk-MSOHJC7F.js.map

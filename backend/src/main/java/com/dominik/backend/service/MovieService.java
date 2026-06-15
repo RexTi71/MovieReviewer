@@ -15,10 +15,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MovieService {
     private final MovieRepository movieRepository;
-    private final ReviewRepository reviewRepository;
+    private final Long MOVIES_PER_PAGE = 10L;
 
     public List<Movie> getAllMovies(Pageable pageable){
         return movieRepository.findAll(pageable).getContent();
+    }
+    public Long countMovies(){
+        return movieRepository.count() / MOVIES_PER_PAGE + 1;
     }
     public Movie getMovie(Long id){return movieRepository.findById(id).orElse(null);}
     public List<Movie> searchMovie(String title){

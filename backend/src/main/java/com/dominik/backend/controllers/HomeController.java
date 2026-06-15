@@ -7,11 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,11 +17,16 @@ import java.util.List;
 public class HomeController {
 
     private final MovieService service;
+    private final int PAGE_SIZE = 10;
 
     @GetMapping("/movies")
-    public ResponseEntity<List<Movie>> getMovies(){
-        Pageable pageable = PageRequest.of(0,15);
+    public ResponseEntity<List<Movie>> getMovies(@RequestParam int page){
+        Pageable pageable = PageRequest.of(page,PAGE_SIZE);
         return ResponseEntity.ok(service.getAllMovies(pageable));
+    }
+    @GetMapping("/movies-amount")
+    public ResponseEntity<Long> countMovies(){
+        return ResponseEntity.ok(service.countMovies());
     }
     @GetMapping("/movie/{id}")
     public ResponseEntity<Movie> getMovie(@PathVariable Long id){

@@ -13,7 +13,7 @@ import {
   resource,
   signal,
   untracked
-} from "./chunk-LA7SL2HP.js";
+} from "./chunk-BQ2YPHMC.js";
 import {
   Observable,
   ReplaySubject,

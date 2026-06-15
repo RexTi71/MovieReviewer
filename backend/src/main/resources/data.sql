@@ -38,3 +38,20 @@ INSERT INTO categoryxmovie (movie_id, category_id) VALUES
 (8, 3), (8, 4),
 (9, 7), (9, 4), (9, 8),
 (10,1), (10,5);
+
+INSERT INTO movie (title, description, production_date) VALUES
+                                                            ('Interstellar', 'W obliczu globalnego kryzysu żywnościowego, zespół astronautów wyrusza w podróż przez tunel czasoprzestrzenny, aby znaleźć nową planetę nadającą się do zasiedlenia przez ludzkość. Film eksploruje granice fizyki, relacje ojca z córką oraz determinację przetrwania gatunku.', '2014-11-07'),
+                                                            ('Skazani na Shawshank', 'Historia niesłusznie skazanego bankiera, Andy’ego Dufresne’a, który trafia do więzienia Shawshank. Przez lata zyskuje szacunek współwięźniów i strażników, nie tracąc przy tym nadziei na odzyskanie wolności i sprawiedliwość.', '1994-09-22'),
+                                                            ('Władca Pierścieni: Dwie Wieże', 'Drużyna Pierścienia rozpadła się. Frodo i Sam kontynuują niebezpieczną wędrówkę do Mordoru, śledzeni przez tajemniczego Golluma. Tymczasem Aragorn, Legolas i Gimli stają do walki w obronie królestwa Rohanu przed armią Sarumana.', '2002-12-18'),
+                                                            ('Parasite', 'Biedna rodzina infiltruje dom zamożnych Państwa Parków, podszywając się pod wysoko wykwalifikowanych pracowników. Z czasem granica między klasami społecznymi zaczyna się zacierać, prowadząc do nieprzewidywalnego i brutalnego finału.', '2019-05-30'),
+                                                            ('Whiplash', 'Młody perkusista marzy o byciu wielkim muzykiem jazzowym. Jego ambicja zostaje wystawiona na próbę, gdy trafia pod skrzydła bezwzględnego nauczyciela, który stosuje brutalne metody nauczania, by wydobyć ze swoich uczniów absolutną doskonałość.', '2014-10-10');
+
+INSERT INTO categoryxmovie (movie_id, category_id) VALUES
+                                                       (11, 1), (11, 4),
+                                                       (12, 4),
+                                                       (13, 6), (13, 5),
+                                                       (14, 2), (14, 4),
+                                                       (15, 4), (15, 8);
+
+INSERT INTO Account (username, email, password_hash, user_type) VALUES
+                                                                  ('Admin', 'admin@gmail.com', '$2a$12$20N2omhFfYiJnVfIGFG4k.tDQGW1fFFZPggGYLjoxbNeDp2egaXtu', 2);
