@@ -8,7 +8,7 @@
   }
 </div>
 <footer class="flex bg-baltic-blue justify-center gap-x-4 items-center w-full ">
-  @for (amount of this.moviesAmount; track amount) {
+  @for (amount of moviesAmount(); track amount) {
     <app-page-select [character]="String(amount)"></app-page-select>
   }
 

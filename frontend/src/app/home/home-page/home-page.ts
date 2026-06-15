@@ -19,7 +19,7 @@ export class HomePage implements OnInit {
   activeRoute = inject(ActivatedRoute);
   private http = inject(HttpClient);
 
-  moviesAmount: number[] = [];
+  moviesAmount = signal<number[]>([]);
 
   private pageNumber = this.activeRoute.snapshot.queryParamMap.get('page');
 
@@ -53,7 +53,7 @@ export class HomePage implements OnInit {
       .get('http://localhost:8080/api/v1/movies-amount', { responseType: 'text' })
       .subscribe((res) => {
         let amount = Number(res);
-        this.moviesAmount = Array.from({ length: amount }, (_, i) => i + 1);
+        this.moviesAmount.set(Array.from({ length: amount }, (_, i) => i + 1));
       });
   }
 

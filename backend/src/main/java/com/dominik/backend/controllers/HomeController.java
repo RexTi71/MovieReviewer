@@ -1,11 +1,14 @@
 package com.dominik.backend.controllers;
 
 import com.dominik.backend.dto.MovieDto;
+import com.dominik.backend.dto.MovieRequestDto;
 import com.dominik.backend.model.Movie;
 import com.dominik.backend.service.MovieService;
+import com.dominik.backend.service.ResponseBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +20,7 @@ import java.util.List;
 public class HomeController {
 
     private final MovieService service;
+    private final ResponseBuilder responseBuilder;
     private final int PAGE_SIZE = 10;
 
     @GetMapping("/movies")
@@ -37,5 +41,16 @@ public class HomeController {
         return ResponseEntity.ok(service.searchMovie(query));
     }
     @GetMapping("/top10")
-    public List<Movie> getTop10(){return service.getTop10();}
+    public ResponseEntity<List<Movie>> getTop10(){
+        return ResponseEntity.ok(service.getTop10());
+    }
+    @PostMapping("/movie")
+    public ResponseEntity<String> addMovie(@RequestParam String token,
+                                           @RequestBody MovieRequestDto movieDto){
+        try{
+            return responseBuilder.buildSuccessResponse(service.addMovie(token, movieDto));
+        }catch (IllegalArgumentException ex){
+            return responseBuilder.buildErrorResponse(ex.getMessage(), HttpStatus.BAD_GATEWAY);
+        }
+    }
 }

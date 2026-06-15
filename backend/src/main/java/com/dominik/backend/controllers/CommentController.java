@@ -3,6 +3,7 @@ package com.dominik.backend.controllers;
 import com.dominik.backend.dto.CommentDto;
 import com.dominik.backend.dto.CommentResponseDto;
 import com.dominik.backend.service.CommentService;
+import com.dominik.backend.service.ResponseBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,8 @@ import java.util.List;
 @RequestMapping("api/v1")
 public class CommentController {
     private final CommentService commentService;
+    private final ResponseBuilder responseBuilder;
 
-    private String buildResponse(String message){
-        return "\"" + message + "\"";
-    }
     @GetMapping("/comment")
     public ResponseEntity<List<CommentResponseDto>> getCommentsForReview(@RequestParam Long accountId,
                                                                          @RequestParam Long movieId){
@@ -27,10 +26,9 @@ public class CommentController {
     @PostMapping("/comment")
     public ResponseEntity<String> addComment(@RequestBody CommentDto commentDto){
         try {
-            String response = buildResponse(commentService.addComent(commentDto));
-            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
+            return responseBuilder.buildSuccessResponse(commentService.addComent(commentDto));
         }catch (IllegalArgumentException ex){
-            return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(buildResponse(ex.getMessage()));
+            return responseBuilder.buildErrorResponse(ex.getMessage());
         }
     }
 }

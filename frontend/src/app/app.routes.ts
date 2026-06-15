@@ -5,6 +5,7 @@ import {LoginPage} from './profile/login-page/login-page';
 import {RegistrationPage} from './profile/registration-page/registration-page';
 import { Top10Page } from './top-10/top-10-page/top-10-page';
 import { ProfilePage } from './profile/profile-page/profile-page';
+import { AdminPage } from './admin/admin-page/admin-page';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,11 @@ export const routes: Routes = [
     path: 'login',
     component: LoginPage,
     title: 'Zaloguj się',
+  },
+  {
+    path: 'admin',
+    component: AdminPage,
+    title: 'Panel administratora',
   },
   {
     path: 'profil',

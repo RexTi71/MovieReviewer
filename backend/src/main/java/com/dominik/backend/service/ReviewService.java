@@ -38,7 +38,7 @@ public class ReviewService
         });
         return mappedReviews;
     }
-    public void addReview(ReviewDto reviewDto){
+    public String addReview(ReviewDto reviewDto){
         //Mapowanie DTO do obiektu Review
         Review newReview = new Review();
         newReview.setTitle(reviewDto.getTitle());
@@ -49,6 +49,7 @@ public class ReviewService
 
         reviewRepository.save(newReview);
         updateRating(newReview.getMovie().getId());
+        return "Pomyślnie dodano recenzje";
     }
     private void updateRating(Long movieId){
         Float averageRating = reviewRepository.avgRating(movieId);

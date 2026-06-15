@@ -21,17 +21,17 @@ public class ReportService {
     private final AccountService accountService;
     private final CommentService commentService;
 
-    public String addReport(ReportDto reportDto) throws RuntimeException{
+    public String addReport(ReportDto reportDto) throws IllegalArgumentException{
         Report report = new Report();
         Account account = accountService.getAccountFromUsername(reportDto.getUsername());
 
         if(account == null){
-            throw new RuntimeException("Nie ma takiego użytkownika");
+            throw new IllegalArgumentException("Nie ma takiego użytkownika");
         }
         Comment comment = commentService.getCommentById(reportDto.getCommentId());
 
         if(comment == null){
-            throw new RuntimeException("Nie ma takiego komentarza");
+            throw new IllegalArgumentException("Nie ma takiego komentarza");
         }
 
         report.setAccount(account);

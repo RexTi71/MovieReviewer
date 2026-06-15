@@ -64,7 +64,7 @@ class HomeControllerTest {
 
     @Test
     void shouldReturnAllMovies() throws Exception {
-        mockMvc.perform(get("/api/v1/movies")
+        mockMvc.perform(get("/api/v1/movies?page=0")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
