@@ -5,6 +5,7 @@ import com.dominik.backend.model.Account;
 import com.dominik.backend.model.Session;
 import com.dominik.backend.model.UserType;
 import com.dominik.backend.repository.AccountRepository;
+import com.dominik.backend.repository.CommentRepository;
 import com.dominik.backend.repository.SessionRepository;
 import com.dominik.backend.service.jwt.JWT;
 import com.dominik.backend.service.mail.Emailer;
@@ -45,6 +46,9 @@ class AccountControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
+    private CommentRepository commentRepository;
+
+    @Autowired
     private AccountRepository accountRepository;
 
     @Autowired
@@ -66,9 +70,6 @@ class AccountControllerTest {
 
     @BeforeEach
     void setUp() {
-        sessionRepository.deleteAll();
-        accountRepository.deleteAll();
-
         //zweryfikowane konto
         verifiedAccount = new Account();
         verifiedAccount.setUsername("poprawny_user");
