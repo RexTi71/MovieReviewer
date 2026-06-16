@@ -1,17 +1,17 @@
 import {
   withHttpTransferCache
-} from "./chunk-J3Q3FIR4.js";
+} from "./chunk-4Q72QLZ2.js";
 import {
   CommonModule,
   PLATFORM_BROWSER_ID
-} from "./chunk-I5TTZTVG.js";
+} from "./chunk-7XTF7KGI.js";
 import {
   DomAdapter,
   XhrFactory,
   getDOM,
   parseCookieValue,
   setRootDomAdapter
-} from "./chunk-FVVZNHEA.js";
+} from "./chunk-MJADKNMA.js";
 import {
   APP_ID,
   ApplicationModule,
@@ -54,7 +54,7 @@ import {
   withI18nSupport,
   withIncrementalHydration,
   ɵɵdefineNgModule
-} from "./chunk-IMYMSJZA.js";
+} from "./chunk-I6S6QC72.js";
 import {
   DOCUMENT,
   ENVIRONMENT_INITIALIZER,
@@ -74,7 +74,7 @@ import {
   ɵɵdefineInjectable,
   ɵɵdefineInjector,
   ɵɵinject
-} from "./chunk-LA7SL2HP.js";
+} from "./chunk-2H3XQAGC.js";
 import {
   __spreadValues
 } from "./chunk-PJVWDKLX.js";
@@ -1152,12 +1152,13 @@ var Meta = class _Meta {
   }
   getTag(attrSelector) {
     if (!attrSelector) return null;
-    return this._doc.querySelector(`meta[${attrSelector}]`) || null;
+    const meta = this._doc.querySelector(`meta[${attrSelector}]`);
+    return meta?.nodeName.toLowerCase() === "meta" ? meta : null;
   }
   getTags(attrSelector) {
     if (!attrSelector) return [];
     const list = this._doc.querySelectorAll(`meta[${attrSelector}]`);
-    return list ? [].slice.call(list) : [];
+    return list ? [].slice.call(list).filter((elem) => elem.nodeName.toLowerCase() === "meta") : [];
   }
   updateTag(tag, selector) {
     if (!tag) return null;
@@ -1194,7 +1195,10 @@ var Meta = class _Meta {
   }
   _parseSelector(tag) {
     const attr = tag.name ? "name" : "property";
-    return `${attr}="${tag[attr]}"`;
+    return `${attr}=${this._escapeSelectorValue(String(tag[attr]))}`;
+  }
+  _escapeSelectorValue(value) {
+    return `"${value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
   }
   _containsAttributes(tag, elem) {
     return Object.keys(tag).every((key) => elem.getAttribute(this._getMetaKeyMap(key)) === tag[key]);
@@ -1709,7 +1713,7 @@ function provideClientHydration(...features) {
   }
   return makeEnvironmentProviders([typeof ngDevMode !== "undefined" && ngDevMode ? provideEnabledBlockingInitialNavigationDetector() : [], typeof ngDevMode !== "undefined" && ngDevMode ? provideStabilityDebugging() : [], withDomHydration(), featuresKind.has(HydrationFeatureKind.NoHttpTransferCache) || hasHttpTransferCacheOptions ? [] : withHttpTransferCache({}), providers]);
 }
-var VERSION = new Version("21.2.13");
+var VERSION = new Version("21.2.17");
 
 export {
   EventManagerPlugin,
@@ -1748,4 +1752,4 @@ export {
   provideClientHydration,
   VERSION
 };
-//# sourceMappingURL=chunk-UV3RV6CK.js.map
+//# sourceMappingURL=chunk-UXTSYMMF.js.map

@@ -8,13 +8,10 @@ import com.dominik.backend.model.Movie;
 import com.dominik.backend.model.UserType;
 import com.dominik.backend.repository.CategoryRepository;
 import com.dominik.backend.repository.MovieRepository;
-import com.dominik.backend.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -72,6 +69,12 @@ public class MovieService {
         movieRepository.save(movie);
 
         return "Pomyślnie stworzono film";
+    }
+    public String deleteMovie(Long id) throws IllegalArgumentException{
+        Movie movie = movieRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Nie znaleziono takiego filmu") );
+
+        movieRepository.delete(movie);
+        return "Pomyślnie usunięto film";
     }
 
 }

@@ -22,6 +22,7 @@ export class MovieReview {
   private http = inject(HttpClient);
   private activeRoute = inject(ActivatedRoute);
   private reportSerivce = inject(ReportService);
+  private route = inject(Router);
 
   token = sessionStorage.getItem('token');
 
@@ -70,6 +71,9 @@ export class MovieReview {
       this.http.post(`http://localhost:8080/api/v1/comment`, comment).subscribe({
         next: (res) => {
           console.log(res);
+          this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.route.navigate(['/film/', comment.movieId]);
+          });
           this.reportSerivce.clearReply();
         },
         error: (err) => {

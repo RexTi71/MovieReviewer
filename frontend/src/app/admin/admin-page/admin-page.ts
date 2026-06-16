@@ -47,4 +47,14 @@ export class AdminPage {
       }
     });
   }
+  deleteMovie(id:number){
+    this.http.delete(`http://localhost:8080/api/v1/movie/${id}`).subscribe({
+      next: res =>{
+        console.log(res);
+      },
+      error: err => {
+        console.log(err);
+      }
+    })
+  }
 }

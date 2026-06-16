@@ -1,6 +1,6 @@
 import {
   PlatformLocation
-} from "./chunk-FVVZNHEA.js";
+} from "./chunk-MJADKNMA.js";
 import {
   ApplicationRef,
   Attribute,
@@ -47,7 +47,7 @@ import {
   ɵɵgetInheritedFactory,
   ɵɵinjectAttribute,
   ɵɵstyleProp
-} from "./chunk-IMYMSJZA.js";
+} from "./chunk-I6S6QC72.js";
 import {
   DOCUMENT,
   DestroyRef,
@@ -64,7 +64,7 @@ import {
   ɵɵdefineInjectable,
   ɵɵdefineInjector,
   ɵɵinject
-} from "./chunk-LA7SL2HP.js";
+} from "./chunk-2H3XQAGC.js";
 import {
   Subject,
   __spreadProps,
@@ -365,7 +365,7 @@ function _stripBasePath(basePath, url) {
   return url;
 }
 function _stripIndexHtml(url) {
-  return url.replace(/\/index.html$/, "");
+  return url.replace(/\/index\.html$/, "");
 }
 function _stripOrigin(baseHref) {
   const isAbsoluteUrl2 = new RegExp("^(https?:)?//").test(baseHref);
@@ -796,8 +796,10 @@ function getNumberOfCurrencyDigits(code) {
 var ISO8601_DATE_REGEX = /^(\d{4,})-?(\d\d)-?(\d\d)(?:T(\d\d)(?::?(\d\d)(?::?(\d\d)(?:\.(\d+))?)?)?(Z|([+-])(\d\d):?(\d\d))?)?$/;
 var NAMED_FORMATS = {};
 var DATE_FORMATS_SPLIT = /((?:[^BEGHLMOSWYZabcdhmswyz']+)|(?:'(?:[^']|'')*')|(?:G{1,5}|y{1,4}|Y{1,4}|M{1,5}|L{1,5}|w{1,2}|W{1}|d{1,2}|E{1,6}|c{1,6}|a{1,5}|b{1,5}|B{1,5}|h{1,2}|H{1,2}|m{1,2}|s{1,2}|S{1,3}|z{1,4}|Z{1,5}|O{1,4}))([\s\S]*)/;
+var MAX_DATE_FORMAT_LENGTH = 256;
 function formatDate(value, format, locale, timezone) {
   let date = toDate(value);
+  assertValidDateFormatLength(format);
   const namedFormat = getNamedFormat(locale, format);
   format = namedFormat || format;
   let parts = [];
@@ -830,6 +832,11 @@ function formatDate(value, format, locale, timezone) {
     text += dateFormatter ? dateFormatter(date, locale, dateTimezoneOffset) : value2 === "''" ? "'" : value2.replace(/(^'|'$)/g, "").replace(/''/g, "'");
   });
   return text;
+}
+function assertValidDateFormatLength(format) {
+  if (format.length > MAX_DATE_FORMAT_LENGTH) {
+    throw new RuntimeError(2300, ngDevMode && `Date format is too long. Exceeded maximum length of ${MAX_DATE_FORMAT_LENGTH} characters.`);
+  }
 }
 function assertValidDateFormat(parts) {
   if (parts.some((part) => /^Y+$/.test(part)) && !parts.some((part) => /^w+$/.test(part))) {
@@ -1391,6 +1398,10 @@ function formatNumberToLocaleString(value, pattern, locale, groupSymbol, decimal
         maxFraction = parseIntAutoRadix(maxFractionPart);
       } else if (minFractionPart != null && minFraction > maxFraction) {
         maxFraction = minFraction;
+      }
+      const MAX_ALLOWED_DIGITS = 100;
+      if (minInt > MAX_ALLOWED_DIGITS || minFraction > MAX_ALLOWED_DIGITS || maxFraction > MAX_ALLOWED_DIGITS) {
+        throw new RuntimeError(2306, ngDevMode && `${digitsInfo} is not a valid digit info. Exceeded maximum limits of ${MAX_ALLOWED_DIGITS} digits.`);
       }
     }
     roundNumber(parsedNumber, minFraction, maxFraction);
@@ -3298,7 +3309,7 @@ function isPlatformBrowser(platformId) {
 function isPlatformServer(platformId) {
   return platformId === PLATFORM_SERVER_ID;
 }
-var VERSION = new Version("21.2.13");
+var VERSION = new Version("21.2.17");
 var ViewportScroller = class _ViewportScroller {
   static ɵprov = ɵɵdefineInjectable({
     token: _ViewportScroller,
@@ -4129,13 +4140,13 @@ var NgOptimizedImage = class _NgOptimizedImage {
       placeholderResolution
     } = this.config;
     if (placeholderInput === true) {
-      return `url(${this.callImageLoader({
+      return `url("${escapeCssUrl(this.callImageLoader({
         src: this.ngSrc,
         width: placeholderResolution,
         isPlaceholder: true
-      })})`;
+      }))}")`;
     } else if (typeof placeholderInput === "string") {
-      return `url(${placeholderInput})`;
+      return `url("${escapeCssUrl(placeholderInput)}")`;
     }
     return null;
   }
@@ -4568,6 +4579,9 @@ function unwrapSafeUrl(value) {
   }
   return unwrapSafeValue(value);
 }
+function escapeCssUrl(input) {
+  return input.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+}
 function booleanOrUrlAttribute(value) {
   if (typeof value === "string" && value !== "true" && value !== "false" && value !== "") {
     return value;
@@ -4667,4 +4681,4 @@ export {
   PRECONNECT_CHECK_BLOCKLIST,
   NgOptimizedImage
 };
-//# sourceMappingURL=chunk-I5TTZTVG.js.map
+//# sourceMappingURL=chunk-7XTF7KGI.js.map

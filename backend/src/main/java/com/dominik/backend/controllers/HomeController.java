@@ -53,4 +53,12 @@ public class HomeController {
             return responseBuilder.buildErrorResponse(ex.getMessage(), HttpStatus.BAD_GATEWAY);
         }
     }
+    @DeleteMapping("/movie/{id}")
+    public ResponseEntity<String> deleteMovie(@PathVariable Long id){
+        try{
+            return responseBuilder.buildSuccessResponse(service.deleteMovie(id));
+        }catch (IllegalArgumentException ex){
+            return responseBuilder.buildErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

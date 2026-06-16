@@ -2,7 +2,9 @@ package com.dominik.backend.controllers;
 
 import com.dominik.backend.dto.AccountDto;
 import com.dominik.backend.model.Account;
+import com.dominik.backend.model.UserType;
 import com.dominik.backend.service.AccountService;
+import com.dominik.backend.service.ResponseBuilder;
 import com.dominik.backend.service.filemanager.FileStorage;
 import com.dominik.backend.service.jwt.JWT;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,10 +20,9 @@ import java.io.IOException;
 @RequestMapping("/api/auth")
 public class AccountController {
     private final AccountService accountService;
-
     FileStorage avatarStorage;
 
-    public AccountController(AccountService accountService){
+    public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }
 
@@ -65,5 +66,11 @@ public class AccountController {
         }catch (RuntimeException ex){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"response\": \"Token wygasł\"}");
         }
+    }
+    @GetMapping("/admin")
+    public ResponseEntity<Boolean> verifyAdmin(@RequestParam String token){
+        Boolean isAdmin = accountService.getAccountFromToken(token).getUserType().equals(UserType.ADMIN);
+
+        return ResponseEntity.ok(isAdmin);
     }
 }
