@@ -54,11 +54,10 @@ class AccountControllerTest {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private JWT jwt; // Prawdziwy mechanizm JWT - wygenerujemy nim prawidłowe tokeny do testów
+    private JWT jwt;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    // Zaślepiamy Emailer, żeby nie wysyłać prawdziwych e-maili przy rejestracji
     @MockitoBean
     private Emailer emailer;
 
@@ -70,7 +69,7 @@ class AccountControllerTest {
         sessionRepository.deleteAll();
         accountRepository.deleteAll();
 
-        // Zwykłe, zweryfikowane konto gotowe do logowania
+        //zweryfikowane konto
         verifiedAccount = new Account();
         verifiedAccount.setUsername("poprawny_user");
         verifiedAccount.setEmail("poprawny@test.pl");
@@ -78,7 +77,7 @@ class AccountControllerTest {
         verifiedAccount.setUserType(UserType.USER);
         accountRepository.save(verifiedAccount);
 
-        // Konto niezweryfikowane
+        //niezweryfikowane konto
         unverifiedAccount = new Account();
         unverifiedAccount.setUsername("niezweryfikowany");
         unverifiedAccount.setEmail("niezweryfikowany@test.pl");
@@ -100,14 +99,13 @@ class AccountControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("\"Konto utworzone, sprawdź poczte i zweryfikuj adress email przed zalogowaniem.\""));
 
-        // Sprawdzamy, czy w bazie pojawił się nowy rekord
         assertTrue(accountRepository.existsAccountByUsername("nowy_uzytkownik"));
     }
 
     @Test
     void shouldFailRegistrationIfUsernameExists() throws Exception {
         AccountDto dto = new AccountDto();
-        dto.setUsername("poprawny_user"); // Nazwa zajęta przez verifiedAccount z setUp()
+        dto.setUsername("poprawny_user");
         dto.setEmail("inny@test.pl");
         dto.setPassword("haslo123");
 
@@ -128,9 +126,8 @@ class AccountControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isString()); // Oczekujemy tokenu JWT
+                .andExpect(jsonPath("$").isString());
 
-        // Sprawdzamy, czy po poprawnym logowaniu wygenerowano sesję w bazie danych
         assertEquals(1, sessionRepository.findAll().size());
     }
 
@@ -146,22 +143,18 @@ class AccountControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("\"Proszę zweryfikować adres email przed zalogowaniem\""));
 
-        // Sprawdzamy, czy aplikacja próbowała wysłać e-mail z linkiem do weryfikacji
         verify(emailer, times(1)).wyslijEmail(eq("niezweryfikowany@test.pl"), anyString(), anyString());
     }
 
     @Test
     void shouldReturnSelfDataWhenProvidedWithValidToken() throws Exception {
-        // Ręcznie tworzymy sesję w bazie
         Session session = new Session(verifiedAccount, "unknown", "unknown");
         session = sessionRepository.save(session);
 
-        // Ręcznie generujemy prawdziwy token JWT powiązany z tą sesją
         Map<String, String> claims = new HashMap<>();
         claims.put("sesja", session.getId().toString());
         String token = jwt.buildToken(claims, "sesja-użytkownika");
 
-        // Weryfikujemy endpoint /me
         mockMvc.perform(get("/api/auth/me").param("token", token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username", is("poprawny_user")))
@@ -170,16 +163,14 @@ class AccountControllerTest {
 
     @Test
     void shouldVerifyEmailAndRedirectToLogin() throws Exception {
-        // Generujemy token aktywacyjny dla niezweryfikowanego konta
         Map<String, String> claims = new HashMap<>();
         claims.put("email", "niezweryfikowany@test.pl");
         String token = jwt.buildToken(claims, "email-verification");
 
         mockMvc.perform(get("/api/auth/verify").param("token", token))
-                .andExpect(status().is3xxRedirection()) // Oczekujemy kodu 30x (przekierowanie)
-                .andExpect(redirectedUrl("http://localhost:4200/login")); // Sprawdzamy czy url to ten z sendRedirect
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("http://localhost:4200/login"));
 
-        // Sprawdzamy czy w bazie zmienił się status użytkownika na zweryfikowany
         Account updatedAccount = accountRepository.findByEmail("niezweryfikowany@test.pl");
         assertEquals(UserType.USER, updatedAccount.getUserType());
     }

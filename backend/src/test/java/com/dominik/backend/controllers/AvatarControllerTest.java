@@ -43,13 +43,11 @@ class AvatarControllerTest {
 
     @BeforeEach
     void setUp() {
-        // Tworzymy ręcznie atrapę FileStorage
         mockAvatarStorage = Mockito.mock(FileStorage.class);
 
-        // Wstrzykujemy ją na siłę do kontrolera w miejsce "new FileStorage(...)"
         ReflectionTestUtils.setField(avatarController, "avatarStorage", mockAvatarStorage);
 
-        // Przygotowujemy sztuczne konto dla AccountService
+        //konto
         fakeAccount = new Account();
         fakeAccount.setId(5L);
         fakeAccount.setUsername("Janusz");
@@ -57,10 +55,8 @@ class AvatarControllerTest {
 
     @Test
     void shouldReturnAvatarWhenProvidedWithValidToken() throws Exception {
-        // Uczymy serwis kont, by zwracał Janusza po podaniu tokenu
         when(accountService.getAccountFromToken("dobry-token")).thenReturn(fakeAccount);
 
-        // Uczymy atrapę dysku, by zwracała konkretny plik dla ID Janusza (5L)
         byte[] fakeImageBytes = "dane-obrazka".getBytes();
         ByteArrayResource resource = new ByteArrayResource(fakeImageBytes);
         when(mockAvatarStorage.loadAsResource(5L)).thenReturn(resource);
@@ -76,12 +72,11 @@ class AvatarControllerTest {
     void shouldReturnNotFoundWhenAvatarDoesNotExistForToken() throws Exception {
         when(accountService.getAccountFromToken("dobry-token")).thenReturn(fakeAccount);
 
-        // Zwracamy null, co w kontrolerze skutkuje ResponseEntity.notFound()
         when(mockAvatarStorage.loadAsResource(5L)).thenReturn(null);
 
         mockMvc.perform(get("/api/avatar")
                         .param("token", "dobry-token"))
-                .andExpect(status().isNotFound()); // Oczekujemy kodu 404
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -100,22 +95,19 @@ class AvatarControllerTest {
     void shouldUploadAvatarSuccessfully() throws Exception {
         when(accountService.getAccountFromToken("dobry-token")).thenReturn(fakeAccount);
 
-        // Tworzymy sztuczny plik zgodny z klasą MultipartFile (symulacja uploadu)
         MockMultipartFile file = new MockMultipartFile(
-                "file", // Nazwa zgodna z @RequestParam("file")
+                "file",
                 "moj_avatar.png",
                 MediaType.IMAGE_PNG_VALUE,
                 "dane-obrazka".getBytes()
         );
 
-        // Używamy zapytania multipart() zamiast post(), by móc wysłać plik
         mockMvc.perform(multipart("/api/avatar")
                         .file(file)
                         .param("token", "dobry-token"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("\"Zaktualizowane\""));
 
-        // Weryfikujemy, czy kontroler faktycznie przekazał plik i ID(5L) do metody store()
         verify(mockAvatarStorage, times(1)).store(file, 5L);
     }
 }

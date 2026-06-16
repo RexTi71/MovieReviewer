@@ -46,12 +46,14 @@ class HomeControllerTest {
         reviewRepository.deleteAll();
         movieRepository.deleteAll();
 
+        //film1
         movie1 = new Movie();
         movie1.setTitle("Matrix");
         movie1.setDescription("Hacker learns the truth about reality.");
         movie1.setRating(4.5f);
         movie1.setProductionDate(LocalDate.of(1999, 3, 31));
 
+        //film2
         movie2 = new Movie();
         movie2.setTitle("Inception");
         movie2.setDescription("A thief who steals corporate secrets through the use of dream-sharing technology.");

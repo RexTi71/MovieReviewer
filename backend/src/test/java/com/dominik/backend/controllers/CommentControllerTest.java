@@ -58,7 +58,6 @@ class CommentControllerTest {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    // Mockujemy tylko konta, żeby ominąć walidację JWT
     @MockitoBean
     private AccountService accountService;
 
@@ -75,7 +74,7 @@ class CommentControllerTest {
         movieRepository.deleteAll();
         accountRepository.deleteAll();
 
-        // 1. Autor recenzji
+        //autor recenzji
         reviewAuthor = new Account();
         reviewAuthor.setUsername("krytyk");
         reviewAuthor.setEmail("krytyk@test.pl");
@@ -83,7 +82,7 @@ class CommentControllerTest {
         reviewAuthor.setUserType(UserType.USER);
         accountRepository.save(reviewAuthor);
 
-        // 2. Autor komentarzy
+        //autor komentarzy
         commentAuthor = new Account();
         commentAuthor.setUsername("widz");
         commentAuthor.setEmail("widz@test.pl");
@@ -91,13 +90,13 @@ class CommentControllerTest {
         commentAuthor.setUserType(UserType.USER);
         accountRepository.save(commentAuthor);
 
-        // 3. Film
+        //film
         movie = new Movie();
         movie.setTitle("Matrix");
         movie.setRating(5.0f);
         movieRepository.save(movie);
 
-        // 4. Recenzja (Złożony klucz: movie + reviewAuthor)
+        //recenzja
         review = new Review();
         review.setAccount(reviewAuthor);
         review.setMovie(movie);
@@ -106,7 +105,7 @@ class CommentControllerTest {
         review.setRating(5);
         reviewRepository.save(review);
 
-        // 5. Główny komentarz w bazie
+        //glowny komentarz
         rootComment = new Comment();
         rootComment.setAccount(commentAuthor);
         rootComment.setReview(review);
@@ -143,9 +142,8 @@ class CommentControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("Pomyślnie dodano komentarz")));
+                .andExpect(jsonPath("$.response", is("Pomyślnie dodano komentarz")));
 
-        // Baza powinna mieć 2 komentarze (z setUp + nowo dodany)
         assertEquals(2, commentRepository.findAll().size());
     }
 
@@ -153,7 +151,6 @@ class CommentControllerTest {
     void shouldAddReplyToExistingComment() throws Exception {
         when(accountService.getAccountFromToken("valid-token")).thenReturn(commentAuthor);
 
-        // Ustawiamy komentarz jako odpowiedź na 'rootComment'
         CommentDto dto = new CommentDto();
         dto.setToken("valid-token");
         dto.setMovieId(movie.getId());
@@ -166,24 +163,21 @@ class CommentControllerTest {
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk());
 
-        // Weryfikacja bazy danych dla relacji Parent-Child
         List<Comment> comments = commentRepository.findAll();
         assertEquals(2, comments.size());
 
-        // Szukamy nowo dodanego komentarza (odpowiedzi)
         Comment replyComment = comments.stream()
                 .filter(c -> c.getContent().equals("Odpowiadam na pierwszy komentarz."))
                 .findFirst()
                 .orElseThrow();
 
-        // Upewniamy się, że relacja replyTo zapisała się prawidłowo
         assertNotNull(replyComment.getReplyTo());
         assertEquals(rootComment.getId(), replyComment.getReplyTo().getId());
     }
 
     @Test
     void shouldReturnBadRequestWhenTokenIsInvalid() throws Exception {
-        when(accountService.getAccountFromToken("zly-token")).thenThrow(new RuntimeException("Nie poprawny token"));
+        when(accountService.getAccountFromToken("zly-token")).thenThrow(new RuntimeException("Niepoprawny token"));
 
         CommentDto dto = new CommentDto();
         dto.setToken("zly-token");
@@ -195,6 +189,6 @@ class CommentControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is("Niepoprawny token"))); // Obsługa IllegalArgumentException
+                .andExpect(jsonPath("$.response", is("Niepoprawny token")));
     }
 }

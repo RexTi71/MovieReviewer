@@ -14,6 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -26,7 +27,6 @@ class PostersControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    // Pobieramy prawdziwy kontroler zarządzany przez Springa
     @Autowired
     private PostersController postersController;
 
@@ -34,37 +34,32 @@ class PostersControllerTest {
 
     @BeforeEach
     void setUp() {
-        // Ręcznie tworzymy sztuczny obiekt FileStorage
         mockPosterStorage = Mockito.mock(FileStorage.class);
 
-        // Wstrzykujemy naszą atrapę w miejsce 'new FileStorage("posters/")' wewnątrz kontrolera
         ReflectionTestUtils.setField(postersController, "posterStorage", mockPosterStorage);
     }
 
     @Test
     void shouldReturnPosterImage() throws Exception {
-        // Przygotowujemy sztuczny plik w pamięci RAM (ciąg znaków jako bajty)
+        //sztuczny obrazek w pamieci RAM
         byte[] fakeImageBytes = "to-jest-sztuczny-obrazek".getBytes();
         ByteArrayResource resource = new ByteArrayResource(fakeImageBytes);
 
-        // Uczymy naszą atrapę (Mocka) zachowania:
         when(mockPosterStorage.loadAsResource(1L)).thenReturn(resource);
 
-        // Wykonujemy zapytanie HTTP i sprawdzamy wyniki
         mockMvc.perform(get("/api/poster/{id}", 1L))
-                .andExpect(status().isOk()) // Oczekujemy kodu 200
-                .andExpect(content().contentType(MediaType.IMAGE_PNG)) // Oczekujemy nagłówka PNG
-                .andExpect(content().bytes(fakeImageBytes)); // Oczekujemy dokładnie naszych bajtów
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.IMAGE_PNG))
+                .andExpect(content().bytes(fakeImageBytes));
     }
 
     @Test
     void shouldReturnBadRequestWhenFileNotFound() throws Exception {
-        // Uczymy atrapę rzucać wyjątek dla nieistniejącego ID (np. 99)
+        //wyjatek dla nieistniejacego ID
         when(mockPosterStorage.loadAsResource(99L)).thenThrow(new StorageException("Nie znaleziono pliku lub brakuje fallback.png"));
 
-        // Wykonujemy zapytanie HTTP i sprawdzamy wyniki
         mockMvc.perform(get("/api/poster/{id}", 99L))
-                .andExpect(status().isBadRequest()) // Oczekujemy kodu 400
-                .andExpect(content().string("Nie znaleziono pliku lub brakuje fallback.png")); // Oczekujemy treści błędu
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.response", is("Nie znaleziono pliku lub brakuje fallback.png")));
     }
 }

@@ -64,13 +64,13 @@ class ReviewControllerTest {
         accountRepository.deleteAll();
         movieRepository.deleteAll();
 
-        // 1. Tworzymy film
+        //film do testow
         movie = new Movie();
         movie.setTitle("Interstellar");
         movie.setRating(0f);
         movieRepository.save(movie);
 
-        // 2. Tworzymy PIERWSZE konto użytkownika
+        //pierwszy uzytkownik
         account = new Account();
         account.setUsername("kino_maniak");
         account.setEmail("kino@maniak.pl");
@@ -78,7 +78,7 @@ class ReviewControllerTest {
         account.setUserType(UserType.USER);
         accountRepository.save(account);
 
-        // 2.5 Tworzymy DRUGIE konto użytkownika
+        //drugi uzytkownik
         account2 = new Account();
         account2.setUsername("drugi_uzytkownik");
         account2.setEmail("drugi@maniak.pl");
@@ -86,7 +86,7 @@ class ReviewControllerTest {
         account2.setUserType(UserType.USER);
         accountRepository.save(account2);
 
-        // 3. Tworzymy recenzję PIERWSZEGO użytkownika
+        //recenzja uzytkownika1
         Review review = new Review();
         review.setMovie(movie);
         review.setAccount(account);
@@ -125,7 +125,6 @@ class ReviewControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.response", is("Pomyślnie dodano recenzje")));
 
-        // W bazie będą dwie recenzje (jedna od 'account', druga od 'account2')
         List<Review> reviewsInDb = reviewRepository.findAllByMovieId(movie.getId());
         assertEquals(2, reviewsInDb.size());
 
@@ -135,7 +134,6 @@ class ReviewControllerTest {
 
     @Test
     void shouldReturnBadRequestWhenTokenIsInvalid() throws Exception {
-        // Symulujemy sytuację, w której AccountService wyrzuca wyjątek (np. błędny token)
         when(accountService.getAccountFromToken("zly-token")).thenThrow(new RuntimeException("Nie poprawny token"));
 
         ReviewDto dto = new ReviewDto();
@@ -144,11 +142,11 @@ class ReviewControllerTest {
         dto.setRating(5);
         dto.setTitle("Słabo");
 
-        // Oczekujemy statusu 400 Bad Request oraz wiadomości z bloku catch z kontrolera
+        //oczekiwany status 400 oraz wiadomosc
         mockMvc.perform(post("/api/v1/review")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.response", is("Nie udało się dodać recenzji")));
+                .andExpect(jsonPath("$.response", is("Nie poprawny token")));
     }
 }

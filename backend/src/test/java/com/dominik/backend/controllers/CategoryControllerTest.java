@@ -50,11 +50,12 @@ class CategoryControllerTest {
 
     @BeforeEach
     void setUp() {
-        // Czyszczenie bazy (kolejność ma znaczenie ze względu na klucze obce)
         movieRepository.deleteAll();
         categoryRepository.deleteAll();
+        movieRepository.flush();
+        categoryRepository.flush();
 
-        // 1. Tworzymy i zapisujemy kategorie
+        //kategorie
         actionCategory = new Category();
         actionCategory.setName("Akcja");
         actionCategory.setDescription("Filmy z dużą ilością wybuchów");
@@ -65,7 +66,7 @@ class CategoryControllerTest {
         sciFiCategory.setDescription("Fantastyka naukowa");
         categoryRepository.save(sciFiCategory);
 
-        // 2. Tworzymy film i przypisujemy mu kategorię
+        //film
         matrixMovie = new Movie();
         matrixMovie.setTitle("Matrix");
         matrixMovie.setDescription("Haker odkrywa prawdę.");
@@ -80,8 +81,7 @@ class CategoryControllerTest {
         mockMvc.perform(get("/api/v1/categories")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2))) // Oczekujemy dwóch kategorii z setUp()
-                // Sprawdzamy czy poprawnie zmapowało nazwy
+                .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name", is("Akcja")))
                 .andExpect(jsonPath("$[1].name", is("Sci-Fi")));
     }
@@ -96,32 +96,28 @@ class CategoryControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newCategory)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("Pomyślnie dodano kategorie")));
+                .andExpect(jsonPath("$.response", is("Pomyślnie dodano kategorie")));
 
-        // Weryfikacja bazy danych: 2 z setUp() + 1 nowa
         List<Category> categoriesInDb = categoryRepository.findAll();
         assertEquals(3, categoriesInDb.size());
     }
 
     @Test
     void shouldReturnMoviesBySpecificCategory() throws Exception {
-        // Szukamy filmów, które mają w sobie przypisaną kategorię "Sci-Fi"
         mockMvc.perform(get("/api/v1/category/{name}", "Sci-Fi")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1))) // Oczekujemy tylko Matrixa
+                .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].title", is("Matrix")))
                 .andExpect(jsonPath("$[0].rating", is(9.0)));
     }
 
     @Test
     void shouldReturnEmptyListWhenNoMoviesInCategory() throws Exception {
-        // Tworzymy pustą kategorię (bez podpiętych filmów)
         Category emptyCategory = new Category();
         emptyCategory.setName("Dramat");
         categoryRepository.save(emptyCategory);
 
-        // Oczekujemy, że wyszukiwanie zwróci pustą listę []
         mockMvc.perform(get("/api/v1/category/{name}", "Dramat")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
