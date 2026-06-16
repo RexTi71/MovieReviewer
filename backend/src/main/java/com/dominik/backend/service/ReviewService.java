@@ -51,7 +51,7 @@ public class ReviewService
         updateRating(newReview.getMovie().getId());
         return "Pomyślnie dodano recenzje";
     }
-    private void updateRating(Long movieId){
+    public void updateRating(Long movieId){
         Float averageRating = reviewRepository.avgRating(movieId);
         movieRepository.updateMovieRating(averageRating, movieId);
     }

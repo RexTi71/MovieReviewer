@@ -70,7 +70,9 @@ public class AccountController {
     @GetMapping("/admin")
     public ResponseEntity<Boolean> verifyAdmin(@RequestParam String token){
         Boolean isAdmin = accountService.getAccountFromToken(token).getUserType().equals(UserType.ADMIN);
-
-        return ResponseEntity.ok(isAdmin);
+        if(isAdmin){
+            return ResponseEntity.ok(isAdmin);
+        }
+        return ResponseEntity.status(401).body(isAdmin);
     }
 }

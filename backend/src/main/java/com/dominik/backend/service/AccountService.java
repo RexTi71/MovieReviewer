@@ -52,14 +52,14 @@ public class AccountService {
         Account account = new Account();
         account.setUsername(username);
         account.setEmail(email);
-        account.setUserType(UserType.USER);
+        account.setUserType(UserType.UNVERIFIED);
 
         //хеширование пароля
         String hashedPassword = passwordEncoder.encode(password);
         account.setPasswordHash(hashedPassword);
         accountRepository.save(account);
 
-        //sendVerificationEmail(email);
+        sendVerificationEmail(email);
         return sukces("Konto utworzone, sprawdź poczte i zweryfikuj adress email przed zalogowaniem.");
     }
 
