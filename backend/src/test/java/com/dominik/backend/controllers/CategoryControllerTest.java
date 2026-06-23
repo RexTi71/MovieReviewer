@@ -33,6 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 class CategoryControllerTest {
 
+    //TODO: Nie dziala na githubie
 //    @Autowired
 //    private MockMvc mockMvc;
 //
